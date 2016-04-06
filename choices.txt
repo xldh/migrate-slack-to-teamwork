@@ -3,4 +3,9 @@ node-oauth -> Seemed mature, had a lot of contributions, last active was nov 201
 simple-oauth2 -> Seemed okay but I was not sure I could rely on it, or if it was robust enough
 client-oauth2 -> Straight forward api, chainable requests
 
+EDIT:
+    I remembered of passport for authentication, and found a slack strategy. It is the simplest and most robust api I have found so far.
+
+
 Using express for routing and serving static files
+Using request-promise (provided by bluebird) to handle external api calls
