@@ -2,3 +2,5 @@ Using client-oauth2 for oAuth2 client authentication, I picked it amongst severa
 node-oauth -> Seemed mature, had a lot of contributions, last active was nov 2015, on the other hand it seemed not so robust concerning oAuth2
 simple-oauth2 -> Seemed okay but I was not sure I could rely on it, or if it was robust enough
 client-oauth2 -> Straight forward api, chainable requests
+
+Using express for routing and serving static files
