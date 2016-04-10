@@ -4,8 +4,8 @@ var plumber = require('gulp-plumber');
 
 gulp.task('watch-webpack', function () {
     var filePaths = [
-        __dirname + '/../src/**/*.js',
-        __dirname + '/../src/main.js'
+        __dirname + '/../client_src/**/*.js',
+        __dirname + '/../client_src/main.js'
     ];
 
     gulp.src(filePaths)
