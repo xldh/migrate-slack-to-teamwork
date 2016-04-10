@@ -10,5 +10,5 @@ gulp.task('watch-less', function () {
         .pipe(watchLess(lessSrc))
         .pipe(plumber())
         .pipe(less())
-        .pipe(gulp.dest(__dirname + '/../public/css'));
+        .pipe(gulp.dest(__dirname + '/../static/css'));
 });
