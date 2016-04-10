@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teamwork.com slack importer</title>
+</head>
+<body>
+    <div class="main-content">
+        <teamwork-login-form params=""></teamwork-login-form>
+        <import-form></import-form>
+    </div>
+
+
+    <!-- Import form component template -->
+    <template id="import-form-template">
+        OK
+        <div data-bind="visible: teamworkLoggedIn">
+            <ul data-bind="foreach : users">
+                <li>
+                    <user-editable params="{ user: $data }"></user-editable>
+                </li>
+            </ul>
+            <button>Import</button>
+        </div>
+    </template>
+
+    <!-- User row component template -->
+    <template id="user-editable-template">
+        <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
+        <span data-bind="text: user['first-name'] + ' ' + user['last-name']"></span>
+    </template>
+
+    <!-- Teamwork login form component template -->
+    <template id="teamwork-login-form-template">
+        <div data-bind="visible: !teamworkLoggedIn">
+            Please connect
+        </div>
+    </template>
+
+    <script src="bundle.js"></script>
+</body>
+</html>
