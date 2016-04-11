@@ -46,13 +46,13 @@
 
 	__webpack_require__(1);
 	__webpack_require__(8);
-	__webpack_require__(12);
+	__webpack_require__(13);
 	__webpack_require__(3);
 	__webpack_require__(2);
+	__webpack_require__(11);
 	__webpack_require__(15);
 	__webpack_require__(14);
-	__webpack_require__(13);
-	__webpack_require__(11);
+	__webpack_require__(12);
 	__webpack_require__(10);
 	module.exports = __webpack_require__(9);
 
@@ -64,14 +64,14 @@
 	var api = __webpack_require__(2);
 	var ko = __webpack_require__(5);
 	var registerComponents = __webpack_require__(8);
-	var ViewModel = __webpack_require__(12);
+	var ViewModel = __webpack_require__(13);
 	
 	init();
 	
 	function init() {
 	    api.fetchTeamworkableUsers()
+	        .then(registerComponents)
 	        .then(initViewModel)
-	        .then(registerComponents);
 	}
 	
 	
@@ -79,6 +79,7 @@
 	    var viewModel = new ViewModel({
 	        users: users
 	    });
+	
 	
 	    ko.applyBindings(viewModel);
 	}
@@ -15918,7 +15919,7 @@
 
 	var userEditableComponent = __webpack_require__(9);
 	var teamworkLoginFormComponent = __webpack_require__(10);
-	var importFormComponent = __webpack_require__(11);
+	var importFormComponent = __webpack_require__(12);
 	
 	var components = [
 	    importFormComponent,
@@ -15959,11 +15960,23 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
+	var twApi = __webpack_require__(11);
 	
 	function teamworkLoginFormComponent() {
 	    ko.components.register('teamwork-login-form', {
 	        viewModel: function (params) {
-	            this.teamworkLoggedIn = false;
+	            var component = this;
+	
+	            component.apiKey = '';
+	            component.teamworkLoggedIn = params.teamworkLoggedIn;
+	
+	            component.login = function () {
+	                twApi.login(component.apiKey)
+	                    .then(function (success) {
+	                        console.log(success);
+	                        component.teamworkLoggedIn(success);
+	                    });
+	            };
 	        },
 	        template: { element: 'teamwork-login-form-template' }
 	    });
@@ -15976,10 +15989,36 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var $ = __webpack_require__(4);
+	
+	function login (apiKey) {
+	    return $.post('/auth/teamwork', {
+	        apiKey: apiKey
+	    });
+	}
+	
+	function importUsers(users) {
+	
+	}
+	
+	module.exports = {
+	    login: login,
+	    importUsers: importUsers
+	};
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var ko = __webpack_require__(5);
 	
 	function importFormComponent() {
 	    ko.components.register('import-form', {
+	        viewModel: function (params) {
+	            console.log('new import form!');
+	            this.show = params.show;
+	        },
 	        template: { element: 'import-form-template' }
 	    });
 	}
@@ -15988,11 +16027,11 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindUsers = __webpack_require__(13);
-	var bindTeamworkState = __webpack_require__(14);
+	var bindUsers = __webpack_require__(14);
+	var bindTeamworkState = __webpack_require__(15);
 	
 	var bindingFunctions = [
 	    bindUsers,
@@ -16009,7 +16048,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
@@ -16024,7 +16063,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
@@ -16034,19 +16073,6 @@
 	}
 	
 	module.exports = TeamworkState;
-
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	function importUsers(users) {
-	
-	}
-	
-	module.exports = {
-	    importUsers: importUsers
-	};
 
 
 /***/ }

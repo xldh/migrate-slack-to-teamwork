@@ -6,6 +6,7 @@
   "dependencies": {
     "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",
+    "bootstrap-material-design": "^4.0.1",
     "client-oauth2": "^2.2.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
