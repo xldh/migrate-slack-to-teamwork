@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Teamwork.com slack importer</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-material-design.min.css" />
     <link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <div class="main-content">
-        <teamwork-login-form params=""></teamwork-login-form>
+    <div class="main-content" data-bind="if: teamworkLoggedIn()">
         <import-form></import-form>
     </div>
 
+    <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
+        <teamwork-login-form params="{ teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
+    </div>
+
+
+    <!-- Teamwork login form component template -->
+    <template id="teamwork-login-form-template">
+        <form class="teamwork-login-form" data-bind="visible: !teamworkLoggedIn(), submit: login">
+            <label>
+                Api key
+                <input type="password" data-bind="textInput: apiKey" required>
+            </label>
+            <input type="submit" value="Login to teamwork">
+        </form>
+    </template>
 
     <!-- Import form component template -->
     <template id="import-form-template">
-        OK
-        <div data-bind="visible: teamworkLoggedIn">
-            <ul data-bind="foreach : users">
+        <div class="import-form">
+            <ul data-bind="foreach : $root.users">
                 <li>
                     <user-editable params="{ user: $data }"></user-editable>
                 </li>
@@ -27,14 +41,9 @@
 
     <!-- User row component template -->
     <template id="user-editable-template">
-        <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
-        <span data-bind="text: user['first-name'] + ' ' + user['last-name']"></span>
-    </template>
-
-    <!-- Teamwork login form component template -->
-    <template id="teamwork-login-form-template">
-        <div data-bind="visible: !teamworkLoggedIn">
-            Please connect
+        <div class="user-editable">
+            <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
+            <span data-bind="text: user['first-name'] + ' ' + user['last-name']"></span>
         </div>
     </template>
 
