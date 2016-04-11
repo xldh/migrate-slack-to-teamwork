@@ -7,8 +7,8 @@ init();
 
 function init() {
     api.fetchTeamworkableUsers()
+        .then(registerComponents)
         .then(initViewModel)
-        .then(registerComponents);
 }
 
 
@@ -16,6 +16,7 @@ function initViewModel(users) {
     var viewModel = new ViewModel({
         users: users
     });
+
 
     ko.applyBindings(viewModel);
 }
