@@ -1,10 +1,8 @@
 <template id="import-form-template">
-    <div class="import-form">
-        <ul data-bind="foreach: users">
-            <li>
-                <user-editable params="{ user: $data }"></user-editable>
-            </li>
-        </ul>
-        <button data-bind="click: import">Import</button>
+    <div class="import-form well bs-component">
+        <div data-bind="foreach: users">
+            <user-editable params="{ user: $data }"></user-editable>
+        </div>
+        <button data-bind="click: importUsers">Import</button>
     </div>
 </template>

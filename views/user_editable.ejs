@@ -1,8 +1,12 @@
 <template id="user-editable-template">
-    <div class="user-editable">
+    <div class="col-md-2">
         <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
+    </div>
+    <div class="col-md-10">
         <span data-bind="text: fullName()"></span>
+    </div>
 
+    <div class="user-editable form-group">
         <label data-bind="foreach: fields">
             <span data-bind="text: $data"></span>
             <input data-bind="textInput: $parent.user[$data]">

@@ -6,7 +6,7 @@ function importFormComponent() {
             console.log('new import form!');
             this.users = params.users;
             this.selected = ko.observableArray(this.users.slice());
-            this.import = function () {
+            this.importUsers = function () {
             };
         },
         template: { element: 'import-form-template' }
