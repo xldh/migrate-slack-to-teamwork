@@ -1,4 +1,9 @@
 var slackApi = require('./slack_api');
+var teamworkUserEditableFields = [
+    "first-name",
+    "last-name",
+    "email-address"
+];
 
 
 function asTeamworkUsers(slackUsers) {
@@ -50,5 +55,6 @@ function fetchTeamworkableUsers() {
 
 
 module.exports = {
-    fetchTeamworkableUsers: fetchTeamworkableUsers
+    fetchTeamworkableUsers: fetchTeamworkableUsers,
+    teamworkUserEditableFields: teamworkUserEditableFields
 };

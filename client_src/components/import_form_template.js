@@ -5,7 +5,9 @@ function importFormComponent() {
         viewModel: function (params) {
             console.log('new import form!');
             this.users = params.users;
-            console.log(params);
+            this.selected = ko.observableArray(this.users.slice());
+            this.import = function () {
+            };
         },
         template: { element: 'import-form-template' }
     });

@@ -30,12 +30,12 @@
     <!-- Import form component template -->
     <template id="import-form-template">
         <div class="import-form">
-            <ul data-bind="foreach : users">
+            <ul data-bind="foreach: users">
                 <li>
                     <user-editable params="{ user: $data }"></user-editable>
                 </li>
             </ul>
-            <button>Import</button>
+            <button data-bind="click: import">Import</button>
         </div>
     </template>
 
@@ -43,7 +43,12 @@
     <template id="user-editable-template">
         <div class="user-editable">
             <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
-            <span data-bind="text: user['first-name'] + ' ' + user['last-name']"></span>
+            <span data-bind="text: fullName()"></span>
+
+            <label data-bind="foreach: fields">
+                <span data-bind="text: $data"></span>
+                <input data-bind="textInput: $parent.user[$data]">
+            </label>
         </div>
     </template>
 
