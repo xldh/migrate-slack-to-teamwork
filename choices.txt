@@ -9,3 +9,32 @@ EDIT:
 
 Using express for routing and serving static files
 Using request-promise (provided by bluebird) to handle external api calls
+
+
+Using gulp
+    to build client side js with webpack (commonjs style)
+    to build css with less
+
+Breaking responsibilities into different parts
+    server
+        authentication
+            against slack api
+            against teamwork api
+            site index is dynamic and should redirect to slack auth scenario until user is authenticated
+
+        api
+            serve slack user list
+            create teamwork users
+
+        serve static contents
+
+
+    client
+        api
+            apis who will call the server
+            a bridge for apis that will ask apis to fetch slack users and "cast" them as teamwork users
+
+        knockout responsibility is further broken into different parts:
+            isolate view "bindings" which will define data for the views
+            a view model utility which collects different "bindings" to build the final view model
+            components which display data and allow modifications
