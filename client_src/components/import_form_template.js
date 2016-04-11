@@ -4,7 +4,8 @@ function importFormComponent() {
     ko.components.register('import-form', {
         viewModel: function (params) {
             console.log('new import form!');
-            this.show = params.show;
+            this.users = params.users;
+            console.log(params);
         },
         template: { element: 'import-form-template' }
     });

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="main-content" data-bind="if: teamworkLoggedIn()">
-        <import-form></import-form>
+        <import-form params="{ users: users }"></import-form>
     </div>
 
     <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
@@ -30,7 +30,7 @@
     <!-- Import form component template -->
     <template id="import-form-template">
         <div class="import-form">
-            <ul data-bind="foreach : $root.users">
+            <ul data-bind="foreach : users">
                 <li>
                     <user-editable params="{ user: $data }"></user-editable>
                 </li>
