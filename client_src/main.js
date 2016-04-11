@@ -5,7 +5,10 @@ var ViewModel = require('./view_model');
 
 init();
 
+
 function init() {
+    initMaterial();
+
     api.fetchTeamworkableUsers()
         .then(function (users) {
             registerComponents();
@@ -14,6 +17,10 @@ function init() {
         .then(initViewModel)
 }
 
+
+function initMaterial() {
+    $.material.init();
+}
 
 function initViewModel(users) {
     var viewModel = new ViewModel({
