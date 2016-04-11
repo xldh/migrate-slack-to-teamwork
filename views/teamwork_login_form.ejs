@@ -1,0 +1,19 @@
+<template id="teamwork-login-form-template">
+    <div class="well bs-component">
+        <form class="form-horizontal teamwork-login-form" data-bind="visible: !teamworkLoggedIn(), submit: login">
+            <fieldset>
+                <legend>Please enter your teamwork credentials</legend>
+                <div class="form-group">
+                    <label for="inputApiKey" class="col-md-2 control-label">Api key</label>
+                    <div class="col-md-9">
+                        <input id="inputApiKey" class="form-control" type="password" data-bind="textInput: apiKey" required>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-8 col-md-4">
+                    <button type="submit" class="btn btn-primary">Login to teamwork</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</template>

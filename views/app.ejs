@@ -2,56 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-material-design.min.css">
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <title>Teamwork.com slack importer</title>
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-material-design.min.css" />
-    <link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <div class="main-content" data-bind="if: teamworkLoggedIn()">
-        <import-form params="{ users: users }"></import-form>
-    </div>
+    <div class="container">
+        <div class="main-content" data-bind="if: teamworkLoggedIn()">
+            <import-form params="{ users: users }"></import-form>
+        </div>
 
-    <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
-        <teamwork-login-form params="{ teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
+        <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
+            <teamwork-login-form params="{ teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
+        </div>
     </div>
-
 
     <!-- Teamwork login form component template -->
-    <template id="teamwork-login-form-template">
-        <form class="teamwork-login-form" data-bind="visible: !teamworkLoggedIn(), submit: login">
-            <label>
-                Api key
-                <input type="password" data-bind="textInput: apiKey" required>
-            </label>
-            <input type="submit" value="Login to teamwork">
-        </form>
-    </template>
-
+    <% include teamwork_login_form %>
     <!-- Import form component template -->
-    <template id="import-form-template">
-        <div class="import-form">
-            <ul data-bind="foreach: users">
-                <li>
-                    <user-editable params="{ user: $data }"></user-editable>
-                </li>
-            </ul>
-            <button data-bind="click: import">Import</button>
-        </div>
-    </template>
-
+    <% include import_form %>
     <!-- User row component template -->
-    <template id="user-editable-template">
-        <div class="user-editable">
-            <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
-            <span data-bind="text: fullName()"></span>
+    <% include user_editable %>
 
-            <label data-bind="foreach: fields">
-                <span data-bind="text: $data"></span>
-                <input data-bind="textInput: $parent.user[$data]">
-            </label>
-        </div>
-    </template>
-
+    <script src="ext_lib/jquery.min.js"></script>
+    <script src="ext_lib/bootstrap.min.js"></script>
+    <script src="ext_lib/material.min.js"></script>
+    <script src="ext_lib/ripples.min.js"></script>
     <script src="bundle.js"></script>
 </body>
 </html>

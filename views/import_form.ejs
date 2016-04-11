@@ -1,0 +1,10 @@
+<template id="import-form-template">
+    <div class="import-form">
+        <ul data-bind="foreach: users">
+            <li>
+                <user-editable params="{ user: $data }"></user-editable>
+            </li>
+        </ul>
+        <button data-bind="click: import">Import</button>
+    </div>
+</template>
