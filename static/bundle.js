@@ -68,18 +68,27 @@
 	
 	init();
 	
+	
 	function init() {
+	    initMaterial();
+	
 	    api.fetchTeamworkableUsers()
-	        .then(registerComponents)
+	        .then(function (users) {
+	            registerComponents();
+	            return users;
+	        })
 	        .then(initViewModel)
 	}
 	
+	
+	function initMaterial() {
+	    $.material.init();
+	}
 	
 	function initViewModel(users) {
 	    var viewModel = new ViewModel({
 	        users: users
 	    });
-	
 	
 	    ko.applyBindings(viewModel);
 	}
@@ -90,6 +99,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var slackApi = __webpack_require__(3);
+	var teamworkUserEditableFields = [
+	    "first-name",
+	    "last-name",
+	    "email-address"
+	];
 	
 	
 	function asTeamworkUsers(slackUsers) {
@@ -141,7 +155,8 @@
 	
 	
 	module.exports = {
-	    fetchTeamworkableUsers: fetchTeamworkableUsers
+	    fetchTeamworkableUsers: fetchTeamworkableUsers,
+	    teamworkUserEditableFields: teamworkUserEditableFields
 	};
 
 
@@ -15942,17 +15957,53 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
+	var editableFields = __webpack_require__(2).teamworkUserEditableFields;
 	
-	function userFormComponent() {
-	    ko.components.register('user-form', {
+	function userEditableComponent() {
+	    ko.components.register('user-editable', {
 	        viewModel: function (params) {
-	            this.user = params.user;
+	            var component = this;
+	            console.log(params.user);
+	            component.fields = editableFields;
+	            component.user = makeObservable(params.user);
+	            component.fullName = ko.pureComputed(function () {
+	                return component.user['first-name']() + ' ' + component.user['last-name']();
+	            });
 	        },
-	        template: { element: 'user-form-template' }
+	        template: { element: 'user-editable-template' }
 	    });
 	}
 	
-	module.exports = userFormComponent;
+	function makeObservable(object) {
+	    return Object.keys(object)
+	                 .map(extractKeyEntry)
+	                 .reduce(implodeIntoObservable, {});
+	
+	
+	    function extractKeyEntry(key) {
+	        var entry = object[key];
+	
+	        if (Array.isArray(entry)) {
+	            entry = ko.observableArray(entry);
+	        } else {
+	            entry = ko.observable(entry);
+	        }
+	
+	        return [key, entry];
+	    }
+	
+	
+	    function implodeIntoObservable(observable, keyEntry) {
+	        var key = keyEntry[0];
+	        var entry = keyEntry[1];
+	
+	        observable[key] = entry;
+	
+	        return observable;
+	    }
+	}
+	
+	module.exports = userEditableComponent;
 
 
 /***/ },
@@ -16017,7 +16068,10 @@
 	    ko.components.register('import-form', {
 	        viewModel: function (params) {
 	            console.log('new import form!');
-	            this.show = params.show;
+	            this.users = params.users;
+	            this.selected = ko.observableArray(this.users.slice());
+	            this.import = function () {
+	            };
 	        },
 	        template: { element: 'import-form-template' }
 	    });

@@ -1,21 +1,5 @@
-.main-content {
-  width: 100%;
-  height: 100%;
-}
-.main-content .teamwork-login-form {
+.main-content .well {
+  width: 75%;
   margin: 0 auto;
-  padding: 0;
-  width: 50%;
-}
-.main-content .teamwork-login-form label,
-.main-content .teamwork-login-form input {
-  display: block;
-  width: 100%;
-}
-.main-content .teamwork-login-form input,
-.main-content .teamwork-login-form label {
-  vertical-align: middle;
-}
-.main-content .teamwork-login-form input {
-  height: 25px;
+  margin-top: 15px;
 }
