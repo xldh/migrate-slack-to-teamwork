@@ -31,10 +31,10 @@ Breaking responsibilities into different parts
 
     client
         api
-            apis who will call the server
-            a bridge for apis that will ask apis to fetch slack users and "cast" them as teamwork users
+            2 separate internal apis which call slack / teamwork apis
+            a bridge fetching input data from slack api and writing output data to teamwork api
 
-        knockout responsibility is further broken into different parts:
+        knockout responsibility is broken further into different parts:
             isolate view "bindings" which will define data for the views
             a view model utility which collects different "bindings" to build the final view model
             components which display data and allow modifications
