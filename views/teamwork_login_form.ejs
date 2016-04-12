@@ -2,16 +2,16 @@
     <div class="teamwork-login-form well bs-component">
         <form class="form-horizontal" data-bind="visible: !teamworkLoggedIn(), submit: login">
             <fieldset>
-                <legend>Please enter your teamwork credentials</legend>
+                <legend class="col-md-10 col-md-offset-2">Please enter your teamwork credentials</legend>
                 <div class="form-group">
                     <label for="inputApiKey" class="col-md-2 control-label">Api key</label>
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <input id="inputApiKey" class="form-control" type="password" data-bind="textInput: apiKey" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-8 col-md-4">
-                        <button type="submit" class="btn btn-primary">Login to teamwork</button>
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-raised btn-block btn-primary">Login to teamwork</button>
                     </div>
                 </div>
             </fieldset>
