@@ -50,7 +50,7 @@
 	__webpack_require__(3);
 	__webpack_require__(2);
 	__webpack_require__(12);
-	__webpack_require__(13);
+	(function webpackMissingModule() { throw new Error("Cannot find module \"/home/guest/Projects/no-ide/git/migrate-slack-to-teamwork/client_src/components/import_form.js\""); }());
 	__webpack_require__(11);
 	__webpack_require__(9);
 	__webpack_require__(16);
@@ -99,6 +99,7 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var timezonesIds = __webpack_require__(17);
 	var slackApi = __webpack_require__(3);
 	var teamworkUserEditableFields = [
 	    "first-name",
@@ -112,7 +113,17 @@
 	}
 	
 	
+	function computeTimezoneFromSlackUser(slackUser) {
+	    if (!slackUser.tz) {
+	        return "";
+	    }
+	
+	    return timezonesIds[slackUser.tz.split('/')[1]];
+	}
+	
+	
 	function asTeamworkUser(slackUser) {
+	    console.log(computeTimezoneFromSlackUser(slackUser));
 	    return {
 	        "first-name": slackUser.profile.first_name,
 	        "last-name": slackUser.profile.last_name,
@@ -140,7 +151,7 @@
 	        "userLanguage": "EN",
 	        "administrator": "no",
 	        "canAddProjects": "yes",
-	        "timezoneId" : "15",
+	        "timezoneId" : computeTimezoneFromSlackUser(slackUser),
 	        "notifyOnTaskComplete":"no",
 	        "userReceiveNotifyWarnings":"no",
 	        "notify-on-added-as-follower":"yes",
@@ -15935,7 +15946,7 @@
 
 	var userEditableComponent = __webpack_require__(9);
 	var teamworkLoginFormComponent = __webpack_require__(11);
-	var importFormComponent = __webpack_require__(13);
+	var importFormComponent = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/import_form\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	var components = [
 	    importFormComponent,
@@ -15967,7 +15978,7 @@
 	            var component = this;
 	            component.id = params.id;
 	            component.fields = editableFields;
-	            component.user = makeObservable(params.user);
+	            component.user = params.user;
 	            component.fullName = ko.pureComputed(function () {
 	                return component.user['first-name']() + ' ' + component.user['last-name']();
 	            });
@@ -16015,7 +16026,12 @@
 	    }
 	}
 	
-	module.exports = makeObservable;
+	function dataFromObservable(object) {
+	
+	}
+	
+	module.exports.makeObservable = makeObservable;
+	module.exports.dataFromObservable = dataFromObservable;
 
 
 /***/ },
@@ -16071,28 +16087,7 @@
 
 
 /***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ko = __webpack_require__(5);
-	
-	function importFormComponent() {
-	    ko.components.register('import-form', {
-	        viewModel: function (params) {
-	            console.log('new import form!');
-	            this.users = params.users;
-	            this.selected = ko.observableArray(this.users.slice());
-	            this.importUsers = function () {
-	            };
-	        },
-	        template: { element: 'import-form-template' }
-	    });
-	}
-	
-	module.exports = importFormComponent;
-
-
-/***/ },
+/* 13 */,
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -16139,6 +16134,165 @@
 	}
 	
 	module.exports = TeamworkState;
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	   "Abu Dhabi": 83,
+	   "Adelaide": 123,
+	   "Alaska": 2,
+	   "Almaty": 98,
+	   "Amsterdam": 41,
+	   "Arizona": 4,
+	   "Astana": 99,
+	   "Athens": 61,
+	   "Atlantic Time (Canada)": 23,
+	   "Auckland": 136,
+	   "Azores": 33,
+	   "Baghdad": 75,
+	   "Baku": 84,
+	   "Bangkok": 104,
+	   "Beijing": 108,
+	   "Belgrade": 42,
+	   "Berlin": 43,
+	   "Bern": 44,
+	   "Bogota": 20,
+	   "Brasilia": 28,
+	   "Bratislava": 45,
+	   "Brazil (Acre)": 145,
+	   "Brazil (DeNoronha)": 146,
+	   "Brazil (East)": 148,
+	   "Brazil (West)": 147,
+	   "Brisbane": 125,
+	   "Brussels": 46,
+	   "Bucharest": 62,
+	   "Budapest": 47,
+	   "Buenos Aires": 29,
+	   "Cairo": 63,
+	   "Canberra": 126,
+	   "Cape Verde Is.": 34,
+	   "Caracas": 24,
+	   "Casablanca": 35,
+	   "Central America": 15,
+	   "Central Time (US & Canada)": 6,
+	   "Chennai": 93,
+	   "Chennai, Kolkata, Mumbai, New Delhi": 142,
+	   "Chihuahua": 13,
+	   "Chongqing": 109,
+	   "Copenhagen": 48,
+	   "Cork": 144,
+	   "Darwin": 124,
+	   "Dhaka": 100,
+	   "Dublin": 36,
+	   "Eastern Time (US & Canada)": 7,
+	   "Edinburgh": 37,
+	   "Ekaterinburg": 89,
+	   "Fiji": 137,
+	   "Georgetown": 30,
+	   "Greenland": 31,
+	   "Guadalajara": 16,
+	   "Guam": 127,
+	   "Guatemala": 149,
+	   "Hanoi": 105,
+	   "Harare": 64,
+	   "Hawaii": 1,
+	   "Helsinki": 65,
+	   "Hobart": 128,
+	   "Hong Kong": 110,
+	   "Iceland": 143,
+	   "Indiana (East)": 8,
+	   "Irkutsk": 111,
+	   "Islamabad": 90,
+	   "Istanbul": 66,
+	   "Jakarta": 106,
+	   "Jerusalem": 67,
+	   "Kabul": 88,
+	   "Kamchatka": 138,
+	   "Karachi": 91,
+	   "Kathmandu": 97,
+	   "Kolkata": 94,
+	   "Krasnoyarsk": 107,
+	   "Kuala Lumpur": 112,
+	   "Kuwait": 76,
+	   "Kyev": 68,
+	   "La Paz": 25,
+	   "Lima": 21,
+	   "Lisbon": 38,
+	   "Ljubljana": 49,
+	   "London": 39,
+	   "Madrid": 50,
+	   "Magadan": 133,
+	   "Marshall Is.": 139,
+	   "Mazatlan": 14,
+	   "Melbourne": 129,
+	   "Mexico City": 17,
+	   "Mid-Atlantic": 32,
+	   "Midway Island": 10,
+	   "Minsk": 69,
+	   "Monrovia": 40,
+	   "Monterrey": 18,
+	   "Montevideo": 151,
+	   "Moscow": 77,
+	   "Mountain Time (US & Canada)": 5,
+	   "Mumbai": 95,
+	   "Muscat": 85,
+	   "Nairobi": 78,
+	   "New Caledonia": 134,
+	   "New Delhi": 96,
+	   "Newfoundland": 27,
+	   "Novosibirsk": 101,
+	   "Nuku'alofa": 141,
+	   "Osaka": 118,
+	   "Oslo": 150,
+	   "Pacific Time (US & Canada)": 3,
+	   "Paris": 51,
+	   "Perth": 113,
+	   "Port Moresby": 130,
+	   "Prague": 52,
+	   "Pretoria": 70,
+	   "Quito": 22,
+	   "Rangoon": 103,
+	   "Riga": 71,
+	   "Riyadh": 79,
+	   "Rome": 53,
+	   "Samoa": 11,
+	   "Santiago": 26,
+	   "Sapporo": 119,
+	   "Sarajevo": 54,
+	   "Saskatchewan": 19,
+	   "Seoul": 120,
+	   "Singapore": 114,
+	   "Skopje": 55,
+	   "Sofia": 72,
+	   "Solomon Is.": 135,
+	   "Sri Jayawardenepura": 102,
+	   "St. Petersburg": 80,
+	   "Stockholm": 56,
+	   "Sydney": 131,
+	   "Taipei": 115,
+	   "Tallinn": 73,
+	   "Tashkent": 92,
+	   "Tbilisi": 86,
+	   "Tehran": 82,
+	   "Tijuana": 12,
+	   "Tokyo": 121,
+	   "Ulaan Bataar": 116,
+	   "Urumqi": 117,
+	   "Vienna": 57,
+	   "Vilnius": 74,
+	   "Vladivostok": 132,
+	   "Volgograd": 81,
+	   "Warsaw": 58,
+	   "Wellington": 140,
+	   "West Central Africa": 59,
+	   "Windhoek": 152,
+	   "Yakutsk": 122,
+	   "Yerevan": 87,
+	   "Zagreb": 60
+	};
 
 
 /***/ }
