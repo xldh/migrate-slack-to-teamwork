@@ -1,21 +1,22 @@
 <template id="user-editable-template">
-    <div class="panel panel-default">
-        <div class="panel panel-body">
-            <fieldset>
+    <fieldset>
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 <div class="checkbox">
                     <label>
                         <legend>
                             <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
                             <span data-bind="text: fullName()"></span>
+                            <input data-bind="checked: true" type="checkbox" checked="checked">
+                            <span class="checkbox-material">
+                                <span class="check"></span>
+                            </span>
                         </legend>
-
-                        <input data-bind="checked: true" type="checkbox" checked="checked">
-                        <span class="checkbox-material">
-                            <span class="check"></span>
-                        </span> Import
                     </label>
                 </div>
+            </div>
 
+            <div class="panel panel-body">
                 <div data-bind="foreach: fields" class="user-editable form-group">
                     <div class="form-group">
                         <label data-bind="text: $data, attr: {for: 'field_' + $parent.id() + '_' + $index()}"
@@ -26,7 +27,8 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
-        </div>
+            </div>
+        </fieldset>
     </div>
+</div>
 </template>
