@@ -46,13 +46,13 @@
 
 	__webpack_require__(1);
 	__webpack_require__(8);
-	__webpack_require__(13);
+	__webpack_require__(12);
 	__webpack_require__(3);
 	__webpack_require__(2);
 	__webpack_require__(11);
-	__webpack_require__(15);
 	__webpack_require__(14);
-	__webpack_require__(12);
+	__webpack_require__(13);
+	__webpack_require__(15);
 	__webpack_require__(10);
 	module.exports = __webpack_require__(9);
 
@@ -64,13 +64,12 @@
 	var api = __webpack_require__(2);
 	var ko = __webpack_require__(5);
 	var registerComponents = __webpack_require__(8);
-	var ViewModel = __webpack_require__(13);
+	var ViewModel = __webpack_require__(12);
 	
 	init();
 	
 	
 	function init() {
-	    initMaterial();
 	
 	    api.fetchTeamworkableUsers()
 	        .then(function (users) {
@@ -78,6 +77,7 @@
 	            return users;
 	        })
 	        .then(initViewModel)
+	        .then(initMaterial);
 	}
 	
 	
@@ -15934,7 +15934,7 @@
 
 	var userEditableComponent = __webpack_require__(9);
 	var teamworkLoginFormComponent = __webpack_require__(10);
-	var importFormComponent = __webpack_require__(12);
+	var importFormComponent = __webpack_require__(15);
 	
 	var components = [
 	    importFormComponent,
@@ -15957,13 +15957,14 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
+	var makeObservable = __webpack_require__(16);
 	var editableFields = __webpack_require__(2).teamworkUserEditableFields;
 	
 	function userEditableComponent() {
 	    ko.components.register('user-editable', {
 	        viewModel: function (params) {
 	            var component = this;
-	            console.log(params.user);
+	            component.id = params.id;
 	            component.fields = editableFields;
 	            component.user = makeObservable(params.user);
 	            component.fullName = ko.pureComputed(function () {
@@ -15974,34 +15975,6 @@
 	    });
 	}
 	
-	function makeObservable(object) {
-	    return Object.keys(object)
-	                 .map(extractKeyEntry)
-	                 .reduce(implodeIntoObservable, {});
-	
-	
-	    function extractKeyEntry(key) {
-	        var entry = object[key];
-	
-	        if (Array.isArray(entry)) {
-	            entry = ko.observableArray(entry);
-	        } else {
-	            entry = ko.observable(entry);
-	        }
-	
-	        return [key, entry];
-	    }
-	
-	
-	    function implodeIntoObservable(observable, keyEntry) {
-	        var key = keyEntry[0];
-	        var entry = keyEntry[1];
-	
-	        observable[key] = entry;
-	
-	        return observable;
-	    }
-	}
 	
 	module.exports = userEditableComponent;
 
@@ -16062,30 +16035,8 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
-	
-	function importFormComponent() {
-	    ko.components.register('import-form', {
-	        viewModel: function (params) {
-	            console.log('new import form!');
-	            this.users = params.users;
-	            this.selected = ko.observableArray(this.users.slice());
-	            this.import = function () {
-	            };
-	        },
-	        template: { element: 'import-form-template' }
-	    });
-	}
-	
-	module.exports = importFormComponent;
-
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var bindUsers = __webpack_require__(14);
-	var bindTeamworkState = __webpack_require__(15);
+	var bindUsers = __webpack_require__(13);
+	var bindTeamworkState = __webpack_require__(14);
 	
 	var bindingFunctions = [
 	    bindUsers,
@@ -16102,7 +16053,7 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
@@ -16117,7 +16068,7 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(5);
@@ -16127,6 +16078,66 @@
 	}
 	
 	module.exports = TeamworkState;
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ko = __webpack_require__(5);
+	
+	function importFormComponent() {
+	    ko.components.register('import-form', {
+	        viewModel: function (params) {
+	            console.log('new import form!');
+	            this.users = params.users;
+	            this.selected = ko.observableArray(this.users.slice());
+	            this.importUsers = function () {
+	            };
+	        },
+	        template: { element: 'import-form-template' }
+	    });
+	}
+	
+	module.exports = importFormComponent;
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ko = __webpack_require__(5);
+	
+	function makeObservable(object) {
+	    return Object.keys(object)
+	                 .map(extractKeyEntry)
+	                 .reduce(implodeIntoObservable, {});
+	
+	
+	    function extractKeyEntry(key) {
+	        var entry = object[key];
+	
+	        if (Array.isArray(entry)) {
+	            entry = ko.observableArray(entry);
+	        } else {
+	            entry = ko.observable(entry);
+	        }
+	
+	        return [key, entry];
+	    }
+	
+	
+	    function implodeIntoObservable(observable, keyEntry) {
+	        var key = keyEntry[0];
+	        var entry = keyEntry[1];
+	
+	        observable[key] = entry;
+	
+	        return observable;
+	    }
+	}
+	
+	module.exports = makeObservable;
 
 
 /***/ }

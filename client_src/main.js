@@ -7,7 +7,6 @@ init();
 
 
 function init() {
-    initMaterial();
 
     api.fetchTeamworkableUsers()
         .then(function (users) {
@@ -15,6 +14,7 @@ function init() {
             return users;
         })
         .then(initViewModel)
+        .then(initMaterial);
 }
 
 

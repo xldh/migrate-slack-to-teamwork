@@ -1,15 +1,30 @@
 <template id="user-editable-template">
-    <div class="col-md-2">
-        <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
-    </div>
-    <div class="col-md-10">
-        <span data-bind="text: fullName()"></span>
-    </div>
+    <div class="well bs-component">
+        <fieldset>
+            <legend>
+                <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
+                <span data-bind="text: fullName()"></span>
+            </legend>
 
-    <div class="user-editable form-group">
-        <label data-bind="foreach: fields">
-            <span data-bind="text: $data"></span>
-            <input data-bind="textInput: $parent.user[$data]">
-        </label>
+            <div class="checkbox">
+                <label>
+                    <input data-bind="checked: true" type="checkbox" checked="checked">
+                    <span class="checkbox-material">
+                        <span class="check"></span>
+                    </span> Import
+                </label>
+            </div>
+
+            <div data-bind="foreach: fields" class="user-editable form-group">
+                <div class="form-group">
+                    <label data-bind="text: $data, attr: {for: 'field_' + $parent.id() + '_' + $index()}"
+                           class="control-label col-md-4"></label>
+                    <div class="col-md-8">
+                        <input data-bind="textInput: $parent.user[$data], attr: {id: 'field_' + $parent.id() + '_' + $index()}"
+                               class="form-control">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </div>
 </template>
