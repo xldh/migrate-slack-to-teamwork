@@ -1,13 +1,16 @@
 <template id="import-form-template">
     <div class="import-form">
-        <form class="form-horizontal">
+        <div data-bind="visible: !users().length" class="well no-users">
+            <h3>No users to import from slack</h3>
+        </div>
+        <form class="form-horizontal" data-bind="visible: users().length">
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <button type="submit" data-bind="click: importUsers" class="btn btn-block btn-raised btn-primary">Import</button>
                 </div>
             </div>
 
-            <div data-bind="foreach: users">
+            <div data-bind="foreach: selected">
                 <user-editable params="{ user: $data, id: $index }"></user-editable>
             </div>
 

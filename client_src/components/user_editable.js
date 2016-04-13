@@ -1,5 +1,5 @@
 var ko = require('knockout');
-var makeObservable = require('../utils/make_observable');
+var makeObservable = require('../utils/observable').makeObservable;
 var editableFields = require('../apis/slack_teamwork_bridge').teamworkUserEditableFields;
 
 function userEditableComponent() {
@@ -8,7 +8,7 @@ function userEditableComponent() {
             var component = this;
             component.id = params.id;
             component.fields = editableFields;
-            component.user = makeObservable(params.user);
+            component.user = params.user;
             component.fullName = ko.pureComputed(function () {
                 return component.user['first-name']() + ' ' + component.user['last-name']();
             });

@@ -4,11 +4,10 @@ var rp = require('request-promise');
 function teamworkRequestPromise (params) {
     params = params || {};
 
-    console.log('Hitting teamwork with', params);
-
     return rp({
         uri: twConfig.userSite + params.apiMethod + '.json',
         method: params.httpMethod || 'GET',
+        body: params.data,
         json: true,
         headers: {
             'User-Agent': 'Request-Promise',

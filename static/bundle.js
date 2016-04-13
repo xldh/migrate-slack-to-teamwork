@@ -45,17 +45,18 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(8);
-	__webpack_require__(14);
-	__webpack_require__(3);
-	__webpack_require__(2);
-	__webpack_require__(12);
-	(function webpackMissingModule() { throw new Error("Cannot find module \"/home/guest/Projects/no-ide/git/migrate-slack-to-teamwork/client_src/components/import_form.js\""); }());
-	__webpack_require__(11);
 	__webpack_require__(9);
-	__webpack_require__(16);
 	__webpack_require__(15);
-	module.exports = __webpack_require__(10);
+	__webpack_require__(4);
+	__webpack_require__(2);
+	__webpack_require__(13);
+	__webpack_require__(3);
+	__webpack_require__(14);
+	__webpack_require__(12);
+	__webpack_require__(10);
+	__webpack_require__(17);
+	__webpack_require__(16);
+	module.exports = __webpack_require__(11);
 
 
 /***/ },
@@ -63,9 +64,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var api = __webpack_require__(2);
-	var ko = __webpack_require__(5);
-	var registerComponents = __webpack_require__(8);
-	var ViewModel = __webpack_require__(14);
+	var ko = __webpack_require__(6);
+	var registerComponents = __webpack_require__(9);
+	var ViewModel = __webpack_require__(15);
 	
 	init();
 	
@@ -99,8 +100,8 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var timezonesIds = __webpack_require__(17);
-	var slackApi = __webpack_require__(3);
+	var timezonesIds = __webpack_require__(3);
+	var slackApi = __webpack_require__(4);
 	var teamworkUserEditableFields = [
 	    "first-name",
 	    "last-name",
@@ -113,17 +114,16 @@
 	}
 	
 	
+	// This function is expected to return undefined if no timezones were found
 	function computeTimezoneFromSlackUser(slackUser) {
-	    if (!slackUser.tz) {
-	        return "";
+	    if (slackUser.tz) {
+	        return timezonesIds[slackUser.tz.split('/')[1]];
 	    }
 	
-	    return timezonesIds[slackUser.tz.split('/')[1]];
 	}
 	
 	
 	function asTeamworkUser(slackUser) {
-	    console.log(computeTimezoneFromSlackUser(slackUser));
 	    return {
 	        "first-name": slackUser.profile.first_name,
 	        "last-name": slackUser.profile.last_name,
@@ -131,38 +131,14 @@
 	        "avatar-url": slackUser.profile.image_512,
 	        "user-type": 'account',
 	        "user-name": slackUser.name,
-	        "password": "",
-	        "company-id": "",
-	        "title": "",
-	        "phone-number-mobile": "",
-	        "phone-number-office": "",
-	        "phone-number-office-ext": "",
-	        "phone-number-fax": "",
-	        "phone-number-home": "",
-	        "im-handle": "",
-	        "im-service": "",
-	        "dateFormat": "dd/mm/yyyy",
-	        "sendWelcomeEmail": "no",
-	        "welcomeEmailMessage": "",
-	        "receiveDailyReports": "no",
-	        "autoGiveProjectAccess": "yes",
-	        "openID": "",
-	        "notes": "",
-	        "userLanguage": "EN",
-	        "administrator": "no",
-	        "canAddProjects": "yes",
-	        "timezoneId" : computeTimezoneFromSlackUser(slackUser),
-	        "notifyOnTaskComplete":"no",
-	        "userReceiveNotifyWarnings":"no",
-	        "notify-on-added-as-follower":"yes",
-	        "notify-on-status-update":"yes"
+	        "timezoneId" : computeTimezoneFromSlackUser(slackUser)
 	    }
 	};
 	
 	
 	function fetchTeamworkableUsers() {
 	    return slackApi.fetchUsers()
-	    .then(asTeamworkUsers);
+	                   .then(asTeamworkUsers);
 	}
 	
 	
@@ -174,9 +150,168 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	   "Abu Dhabi": 83,
+	   "Adelaide": 123,
+	   "Alaska": 2,
+	   "Almaty": 98,
+	   "Amsterdam": 41,
+	   "Arizona": 4,
+	   "Astana": 99,
+	   "Athens": 61,
+	   "Atlantic Time (Canada)": 23,
+	   "Auckland": 136,
+	   "Azores": 33,
+	   "Baghdad": 75,
+	   "Baku": 84,
+	   "Bangkok": 104,
+	   "Beijing": 108,
+	   "Belgrade": 42,
+	   "Berlin": 43,
+	   "Bern": 44,
+	   "Bogota": 20,
+	   "Brasilia": 28,
+	   "Bratislava": 45,
+	   "Brazil (Acre)": 145,
+	   "Brazil (DeNoronha)": 146,
+	   "Brazil (East)": 148,
+	   "Brazil (West)": 147,
+	   "Brisbane": 125,
+	   "Brussels": 46,
+	   "Bucharest": 62,
+	   "Budapest": 47,
+	   "Buenos Aires": 29,
+	   "Cairo": 63,
+	   "Canberra": 126,
+	   "Cape Verde Is.": 34,
+	   "Caracas": 24,
+	   "Casablanca": 35,
+	   "Central America": 15,
+	   "Central Time (US & Canada)": 6,
+	   "Chennai": 93,
+	   "Chennai, Kolkata, Mumbai, New Delhi": 142,
+	   "Chihuahua": 13,
+	   "Chongqing": 109,
+	   "Copenhagen": 48,
+	   "Cork": 144,
+	   "Darwin": 124,
+	   "Dhaka": 100,
+	   "Dublin": 36,
+	   "Eastern Time (US & Canada)": 7,
+	   "Edinburgh": 37,
+	   "Ekaterinburg": 89,
+	   "Fiji": 137,
+	   "Georgetown": 30,
+	   "Greenland": 31,
+	   "Guadalajara": 16,
+	   "Guam": 127,
+	   "Guatemala": 149,
+	   "Hanoi": 105,
+	   "Harare": 64,
+	   "Hawaii": 1,
+	   "Helsinki": 65,
+	   "Hobart": 128,
+	   "Hong Kong": 110,
+	   "Iceland": 143,
+	   "Indiana (East)": 8,
+	   "Irkutsk": 111,
+	   "Islamabad": 90,
+	   "Istanbul": 66,
+	   "Jakarta": 106,
+	   "Jerusalem": 67,
+	   "Kabul": 88,
+	   "Kamchatka": 138,
+	   "Karachi": 91,
+	   "Kathmandu": 97,
+	   "Kolkata": 94,
+	   "Krasnoyarsk": 107,
+	   "Kuala Lumpur": 112,
+	   "Kuwait": 76,
+	   "Kyev": 68,
+	   "La Paz": 25,
+	   "Lima": 21,
+	   "Lisbon": 38,
+	   "Ljubljana": 49,
+	   "London": 39,
+	   "Madrid": 50,
+	   "Magadan": 133,
+	   "Marshall Is.": 139,
+	   "Mazatlan": 14,
+	   "Melbourne": 129,
+	   "Mexico City": 17,
+	   "Mid-Atlantic": 32,
+	   "Midway Island": 10,
+	   "Minsk": 69,
+	   "Monrovia": 40,
+	   "Monterrey": 18,
+	   "Montevideo": 151,
+	   "Moscow": 77,
+	   "Mountain Time (US & Canada)": 5,
+	   "Mumbai": 95,
+	   "Muscat": 85,
+	   "Nairobi": 78,
+	   "New Caledonia": 134,
+	   "New Delhi": 96,
+	   "Newfoundland": 27,
+	   "Novosibirsk": 101,
+	   "Nuku'alofa": 141,
+	   "Osaka": 118,
+	   "Oslo": 150,
+	   "Pacific Time (US & Canada)": 3,
+	   "Paris": 51,
+	   "Perth": 113,
+	   "Port Moresby": 130,
+	   "Prague": 52,
+	   "Pretoria": 70,
+	   "Quito": 22,
+	   "Rangoon": 103,
+	   "Riga": 71,
+	   "Riyadh": 79,
+	   "Rome": 53,
+	   "Samoa": 11,
+	   "Santiago": 26,
+	   "Sapporo": 119,
+	   "Sarajevo": 54,
+	   "Saskatchewan": 19,
+	   "Seoul": 120,
+	   "Singapore": 114,
+	   "Skopje": 55,
+	   "Sofia": 72,
+	   "Solomon Is.": 135,
+	   "Sri Jayawardenepura": 102,
+	   "St. Petersburg": 80,
+	   "Stockholm": 56,
+	   "Sydney": 131,
+	   "Taipei": 115,
+	   "Tallinn": 73,
+	   "Tashkent": 92,
+	   "Tbilisi": 86,
+	   "Tehran": 82,
+	   "Tijuana": 12,
+	   "Tokyo": 121,
+	   "Ulaan Bataar": 116,
+	   "Urumqi": 117,
+	   "Vienna": 57,
+	   "Vilnius": 74,
+	   "Vladivostok": 132,
+	   "Volgograd": 81,
+	   "Warsaw": 58,
+	   "Wellington": 140,
+	   "West Central Africa": 59,
+	   "Windhoek": 152,
+	   "Yakutsk": 122,
+	   "Yerevan": 87,
+	   "Zagreb": 60
+	};
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(5);
 	
 	function fetchUsers() {
 	    return $.ajax({
@@ -192,7 +327,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10040,7 +10175,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -10061,7 +10196,7 @@
 	        JSON = window["JSON"];
 	(function(factory) {
 	    // Support three module loading scenarios
-	    if ("function" === 'function' && __webpack_require__(7)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(8)['amd']) {
 	        // [1] AMD anonymous module
 	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (true) {
@@ -15915,10 +16050,10 @@
 	}());
 	})();
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module)))
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -15934,19 +16069,19 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var userEditableComponent = __webpack_require__(9);
-	var teamworkLoginFormComponent = __webpack_require__(11);
-	var importFormComponent = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/import_form\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var userEditableComponent = __webpack_require__(10);
+	var teamworkLoginFormComponent = __webpack_require__(12);
+	var importFormComponent = __webpack_require__(14);
 	
 	var components = [
 	    importFormComponent,
@@ -15965,11 +16100,11 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
-	var makeObservable = __webpack_require__(10);
+	var ko = __webpack_require__(6);
+	var makeObservable = __webpack_require__(11).makeObservable;
 	var editableFields = __webpack_require__(2).teamworkUserEditableFields;
 	
 	function userEditableComponent() {
@@ -15992,10 +16127,10 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
+	var ko = __webpack_require__(6);
 	
 	function makeObservable(object) {
 	    return Object.keys(object)
@@ -16027,7 +16162,14 @@
 	}
 	
 	function dataFromObservable(object) {
+	    var data = {};
 	
+	    for (var key in object) {
+	        data[key] = object[key]();
+	    }
+	
+	    console.log(data);
+	    return data;
 	}
 	
 	module.exports.makeObservable = makeObservable;
@@ -16035,11 +16177,11 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
-	var twApi = __webpack_require__(12);
+	var ko = __webpack_require__(6);
+	var twApi = __webpack_require__(13);
 	
 	function teamworkLoginFormComponent() {
 	    ko.components.register('teamwork-login-form', {
@@ -16065,10 +16207,10 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(5);
 	
 	function login (apiKey) {
 	    return $.post('/auth/teamwork', {
@@ -16077,7 +16219,9 @@
 	}
 	
 	function importUsers(users) {
-	
+	    return $.post('/api/teamwork/import', {
+	        users: users
+	    });
 	}
 	
 	module.exports = {
@@ -16087,12 +16231,43 @@
 
 
 /***/ },
-/* 13 */,
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindUsers = __webpack_require__(15);
-	var bindTeamworkState = __webpack_require__(16);
+	var ko = __webpack_require__(6);
+	var makeObservable = __webpack_require__(11).makeObservable;
+	var dataFromObservable = __webpack_require__(11).dataFromObservable;
+	var importUsers = __webpack_require__(13).importUsers;
+	
+	function importFormComponent() {
+	    ko.components.register('import-form', {
+	        viewModel: function (params) {
+	            var component = this;
+	            component.users = params.users;
+	            component.selected = ko.observableArray(component.users().map(makeObservable));
+	
+	            component.importUsers = function () {
+	                var users = component.selected().map(dataFromObservable);
+	
+	                importUsers(users).then(function (data) {
+	                    console.log('importUsers', data);
+	                });
+	            };
+	        },
+	        template: { element: 'import-form-template' }
+	    });
+	}
+	
+	
+	module.exports = importFormComponent;
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var bindUsers = __webpack_require__(16);
+	var bindTeamworkState = __webpack_require__(17);
 	
 	var bindingFunctions = [
 	    bindUsers,
@@ -16109,10 +16284,10 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
+	var ko = __webpack_require__(6);
 	
 	function UserListBinding(model) {
 	    var users = model.users;
@@ -16124,175 +16299,16 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ko = __webpack_require__(5);
+	var ko = __webpack_require__(6);
 	
 	function TeamworkState() {
 	    this.teamworkLoggedIn = ko.observable(false)
 	}
 	
 	module.exports = TeamworkState;
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	   "Abu Dhabi": 83,
-	   "Adelaide": 123,
-	   "Alaska": 2,
-	   "Almaty": 98,
-	   "Amsterdam": 41,
-	   "Arizona": 4,
-	   "Astana": 99,
-	   "Athens": 61,
-	   "Atlantic Time (Canada)": 23,
-	   "Auckland": 136,
-	   "Azores": 33,
-	   "Baghdad": 75,
-	   "Baku": 84,
-	   "Bangkok": 104,
-	   "Beijing": 108,
-	   "Belgrade": 42,
-	   "Berlin": 43,
-	   "Bern": 44,
-	   "Bogota": 20,
-	   "Brasilia": 28,
-	   "Bratislava": 45,
-	   "Brazil (Acre)": 145,
-	   "Brazil (DeNoronha)": 146,
-	   "Brazil (East)": 148,
-	   "Brazil (West)": 147,
-	   "Brisbane": 125,
-	   "Brussels": 46,
-	   "Bucharest": 62,
-	   "Budapest": 47,
-	   "Buenos Aires": 29,
-	   "Cairo": 63,
-	   "Canberra": 126,
-	   "Cape Verde Is.": 34,
-	   "Caracas": 24,
-	   "Casablanca": 35,
-	   "Central America": 15,
-	   "Central Time (US & Canada)": 6,
-	   "Chennai": 93,
-	   "Chennai, Kolkata, Mumbai, New Delhi": 142,
-	   "Chihuahua": 13,
-	   "Chongqing": 109,
-	   "Copenhagen": 48,
-	   "Cork": 144,
-	   "Darwin": 124,
-	   "Dhaka": 100,
-	   "Dublin": 36,
-	   "Eastern Time (US & Canada)": 7,
-	   "Edinburgh": 37,
-	   "Ekaterinburg": 89,
-	   "Fiji": 137,
-	   "Georgetown": 30,
-	   "Greenland": 31,
-	   "Guadalajara": 16,
-	   "Guam": 127,
-	   "Guatemala": 149,
-	   "Hanoi": 105,
-	   "Harare": 64,
-	   "Hawaii": 1,
-	   "Helsinki": 65,
-	   "Hobart": 128,
-	   "Hong Kong": 110,
-	   "Iceland": 143,
-	   "Indiana (East)": 8,
-	   "Irkutsk": 111,
-	   "Islamabad": 90,
-	   "Istanbul": 66,
-	   "Jakarta": 106,
-	   "Jerusalem": 67,
-	   "Kabul": 88,
-	   "Kamchatka": 138,
-	   "Karachi": 91,
-	   "Kathmandu": 97,
-	   "Kolkata": 94,
-	   "Krasnoyarsk": 107,
-	   "Kuala Lumpur": 112,
-	   "Kuwait": 76,
-	   "Kyev": 68,
-	   "La Paz": 25,
-	   "Lima": 21,
-	   "Lisbon": 38,
-	   "Ljubljana": 49,
-	   "London": 39,
-	   "Madrid": 50,
-	   "Magadan": 133,
-	   "Marshall Is.": 139,
-	   "Mazatlan": 14,
-	   "Melbourne": 129,
-	   "Mexico City": 17,
-	   "Mid-Atlantic": 32,
-	   "Midway Island": 10,
-	   "Minsk": 69,
-	   "Monrovia": 40,
-	   "Monterrey": 18,
-	   "Montevideo": 151,
-	   "Moscow": 77,
-	   "Mountain Time (US & Canada)": 5,
-	   "Mumbai": 95,
-	   "Muscat": 85,
-	   "Nairobi": 78,
-	   "New Caledonia": 134,
-	   "New Delhi": 96,
-	   "Newfoundland": 27,
-	   "Novosibirsk": 101,
-	   "Nuku'alofa": 141,
-	   "Osaka": 118,
-	   "Oslo": 150,
-	   "Pacific Time (US & Canada)": 3,
-	   "Paris": 51,
-	   "Perth": 113,
-	   "Port Moresby": 130,
-	   "Prague": 52,
-	   "Pretoria": 70,
-	   "Quito": 22,
-	   "Rangoon": 103,
-	   "Riga": 71,
-	   "Riyadh": 79,
-	   "Rome": 53,
-	   "Samoa": 11,
-	   "Santiago": 26,
-	   "Sapporo": 119,
-	   "Sarajevo": 54,
-	   "Saskatchewan": 19,
-	   "Seoul": 120,
-	   "Singapore": 114,
-	   "Skopje": 55,
-	   "Sofia": 72,
-	   "Solomon Is.": 135,
-	   "Sri Jayawardenepura": 102,
-	   "St. Petersburg": 80,
-	   "Stockholm": 56,
-	   "Sydney": 131,
-	   "Taipei": 115,
-	   "Tallinn": 73,
-	   "Tashkent": 92,
-	   "Tbilisi": 86,
-	   "Tehran": 82,
-	   "Tijuana": 12,
-	   "Tokyo": 121,
-	   "Ulaan Bataar": 116,
-	   "Urumqi": 117,
-	   "Vienna": 57,
-	   "Vilnius": 74,
-	   "Vladivostok": 132,
-	   "Volgograd": 81,
-	   "Warsaw": 58,
-	   "Wellington": 140,
-	   "West Central Africa": 59,
-	   "Windhoek": 152,
-	   "Yakutsk": 122,
-	   "Yerevan": 87,
-	   "Zagreb": 60
-	};
 
 
 /***/ }

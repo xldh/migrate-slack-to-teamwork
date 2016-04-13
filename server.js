@@ -5,7 +5,7 @@ var sessionConfig = appConfig.session;
 var session = require('express-session');
 var passport = require('passport');
 var SlackStrategy = require('passport-slack').Strategy;
-var ensureSlackAuthenticated = require('./ensure_authenticated_middleware');
+var ensureSlackAuthenticated = require('./middlewares/ensure_slack_authenticated');
 
 var express = require('express');
 var bodyParser = require('body-parser');

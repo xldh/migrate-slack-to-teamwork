@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "bluebird": "^3.3.4",
+    "bluebird-queue": "0.0.8",
     "body-parser": "^1.15.0",
     "bootstrap-material-design": "^0.5.9",
     "client-oauth2": "^2.2.0",

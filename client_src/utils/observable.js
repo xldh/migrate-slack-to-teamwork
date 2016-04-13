@@ -29,4 +29,16 @@ function makeObservable(object) {
     }
 }
 
-module.exports = makeObservable;
+function dataFromObservable(object) {
+    var data = {};
+
+    for (var key in object) {
+        data[key] = object[key]();
+    }
+
+    console.log(data);
+    return data;
+}
+
+module.exports.makeObservable = makeObservable;
+module.exports.dataFromObservable = dataFromObservable;

@@ -7,7 +7,9 @@ function login (apiKey) {
 }
 
 function importUsers(users) {
-
+    return $.post('/api/teamwork/import', {
+        users: users
+    });
 }
 
 module.exports = {
