@@ -7,7 +7,7 @@
                         <legend>
                             <img width="48" height="48" data-bind="attr: {src: user['avatar-url']}"></img>
                             <span data-bind="text: fullName()"></span>
-                            <input data-bind="checked: true" type="checkbox" checked="checked">
+                            <input data-bind="checked: true, click: $parents[1].toggleSelection(user)" type="checkbox">
                             <span class="checkbox-material">
                                 <span class="check"></span>
                             </span>

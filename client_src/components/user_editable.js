@@ -12,6 +12,7 @@ function userEditableComponent() {
             component.fullName = ko.pureComputed(function () {
                 return component.user['first-name']() + ' ' + component.user['last-name']();
             });
+            component.checked = ko.observable(true);
         },
         template: { element: 'user-editable-template' }
     });
