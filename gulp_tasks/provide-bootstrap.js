@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var lessWatcher = require('gulp-less-watcher');
 var less = require('gulp-less');
 var plumber = require('gulp-plumber');
+var eol = require('gulp-eol');
 
 gulp.task('provide-bootstrap', function () {
     var materialPath = __dirname + '/../node_modules/bootstrap-material-design/dist/';
@@ -25,8 +26,10 @@ gulp.task('provide-bootstrap', function () {
     ];
 
     gulp.src(cssPaths)
+        .pipe(eol('\n'))
         .pipe(gulp.dest(__dirname + '/../static/css'));
 
     gulp.src(jsPaths)
+        .pipe(eol('\n'))
         .pipe(gulp.dest(__dirname + '/../static/ext_lib'));
 });

@@ -1,6 +1,7 @@
 var gulp = require('gulp')
 var webpack = require('webpack-stream');
 var plumber = require('gulp-plumber');
+var eol = require('gulp-eol');
 
 gulp.task('watch-webpack', function () {
     var filePaths = [
@@ -16,7 +17,9 @@ gulp.task('watch-webpack', function () {
             output: {
                 filename: 'bundle.js'
             }
-        }));
+        }))
+        .pipe(eol('\n'))
+        .pipe(gulp.dest(__dirname + '/../static/'));
 
     return gulp.src(filePaths)
         .pipe(plumber())
@@ -28,5 +31,6 @@ gulp.task('watch-webpack', function () {
                 filename: 'bundle.js'
             }
         }))
+        .pipe(eol('\n'))
         .pipe(gulp.dest(__dirname + '/../static/'));
 });
