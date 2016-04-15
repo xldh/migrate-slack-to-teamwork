@@ -1,5 +1,6 @@
 var ko = require('knockout');
 var twApi = require('../apis/teamwork_api');
+var fetchUsers = require('../apis/slack_teamwork_bridge').fetchTeamworkableUsers;
 
 function teamworkLoginFormComponent() {
     ko.components.register('teamwork-login-form', {
@@ -16,6 +17,7 @@ function teamworkLoginFormComponent() {
                         component.teamworkLoggedIn(success);
                     });
             };
+
         },
         template: { element: 'teamwork-login-form-template' }
     });

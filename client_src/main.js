@@ -7,14 +7,9 @@ init();
 
 
 function init() {
-
-    api.fetchTeamworkableUsers()
-        .then(function (users) {
-            registerComponents();
-            return users;
-        })
-        .then(initViewModel)
-        .then(initMaterial);
+    registerComponents();
+    initViewModel();
+    initMaterial();
 }
 
 
@@ -22,10 +17,10 @@ function initMaterial() {
     $.material.init();
 }
 
-function initViewModel(users) {
-    var viewModel = new ViewModel({
-        users: users
-    });
+function initViewModel() {
+    var viewModel = new ViewModel();
 
     ko.applyBindings(viewModel);
+
+    return viewModel;
 }

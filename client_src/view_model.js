@@ -1,8 +1,6 @@
-var bindUsers = require('./bindings/user_list');
 var bindTeamworkState = require('./bindings/teamwork_state');
 
 var bindingFunctions = [
-    bindUsers,
     bindTeamworkState
 ];
 

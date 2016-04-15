@@ -2,11 +2,23 @@ var ko = require('knockout');
 var makeObservable = require('../utils/observable').makeObservable;
 var dataFromObservable = require('../utils/observable').dataFromObservable;
 var importUsers = require('../apis/teamwork_api').importUsers;
+var fetchUsers = require('../apis/slack_teamwork_bridge').fetchTeamworkableUsers;
 
 function importFormComponent() {
     ko.components.register('import-form', {
         viewModel: function (params) {
             var component = this;
+
+            component.users = ko.observableArray();
+            component.selectedUsers = ko.observableArray();
+
+            console.log('teamworkLoggedIn', true);
+            fetchUsers().then(function (users) {
+                component.users(users.map(makeObservable));
+                component.selectAll();
+                console.log('users', component.selectedUsers());
+            });
+
 
             component.toggleSelection = function (user) {
                 console.log('toggleSelection', user);
@@ -61,11 +73,6 @@ function importFormComponent() {
                     console.log('importUsers', data);
                 });
             };
-
-            component.users = ko.observableArray(params.users().map(makeObservable));
-            component.selectedUsers = ko.observableArray();
-
-            component.selectAll();
         },
         template: { element: 'import-form-template' }
     });
