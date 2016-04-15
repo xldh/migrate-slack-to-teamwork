@@ -45,6 +45,7 @@ function prepareUser(mainUserProfile, user) {
 
 function prefillFields(user) {
     user.administrator = 'no';
+    user['user-type'] = 'account';
 }
 
 
