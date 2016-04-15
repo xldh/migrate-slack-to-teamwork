@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADzklEQVRYR8WXXWxTZRzGn+eUsa0wtjjQWcbatSXyoYLGZV6wsDkXM+IF2mBMFmK4MEj8uMAIjCyztnW0Gm/8wMXLmaiJSCQmJGKgi7owlxBkXQ0i+9LTs2CEOAMOuvX8zVnY4tqCb89i6F3b5/d7n77t6fs/xB1+8A6vj9kC/oj+qCmMEagDaACSgHCIMBNY4hiqTldd6A1y5v8oS29ooo40vwNQfJsF0gL8pAFJE0gAZkLoSI52uMYXW4r+SOqECFrsiTgJSBKUIZhMQCRZVITB8werL6v66Aun/gZQqgoo5gyA34jD7Bo5WH3hdoxVYBrAEkVxobGrQraOdLi+vxVIX9j4E5DyQs3KecrI8MzqtQjSzMdYO/ArgDXKQhvBhua3e6tc5+auolIBJxyU7i53/KRV4DyA+2x4lZH6hg9Q4zmdnc9Qw9P0hlNnCWxWttkIPlTXA/+6E/nIpLUD1n/AFhteZWTjpqPY8ODRfHmTvpB+HGSrss1GcO26r7G57uN8pEF/SD8iZMCGVxmpqe1D/ZYP8+TlNH1hvQfgTmWbjWCVaxANzW/lkAQ/oz+cOizAHhteZeSuyhE0b+vMLUCJ0hdKxUDsU7bZCC4vu4TW7a/mkCLygnUZvk4gaMOrjBQVTWH7s8/nFgC30RdJ7YMgpmyzGQy0PQdNyyygTWQ20BvW9xA8bNOriAkCbbugaQtnmhuO6076I8ZOEelRNNmKrbz7ZzQ9Ec5mf4964vfQGzECFDliy6wAFZf8ha0tXSiv0BekSQwccsfr6XtzohWmeVzBVVBkafHV2QNo/QNfoqR0Mh/7edQTf2ZuJhwoyH6LsHPZZay//xgqV13EigodzD8CzNKkRA+5e9vpf/eXYpl0WvuzcjElysqNia2PR0dLnVeso73yP1xpIR6OuePJ2bHcGzHaKGKdFvnuE6YB+RFgP4UDGZgJjTwDwDG/CNldscp45czuR6zxDvtHG3eT7P5XCev6uwZgBYjfBHwx5j711exOzIVq30i1OBx4TQQ1AM4R0i/kDzec5ll975qp+VzIaNAo3958nobw5eFO10fZn/jAWON7AF+6+frMtemS5UuXTZWV3dt4Jcjg/HhW8J2RP6LvFeE7AC5BEBjuXN2Xb7t3yA6Hb/wPawp5zHpfM7VNXd6Tg9nZggv4wqlPrZspZuSpi8HqhddWlr1db66UGbPfygvQFvPEP1l0AevsMDPp2Fiw9rrKj3b/eNNGCvoAvh/1nOpYdAGVRbMz7eONT5rCXTFPPGfwKfgrsFPAYg6MNQWinvgX2fw/hGhJjgHnRM0AAAAASUVORK5CYII=" type="image/png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADzklEQVRYR8WXXWxTZRzGn+eUsa0wtjjQWcbatSXyoYLGZV6wsDkXM+IF2mBMFmK4MEj8uMAIjCyztnW0Gm/8wMXLmaiJSCQmJGKgi7owlxBkXQ0i+9LTs2CEOAMOuvX8zVnY4tqCb89i6F3b5/d7n77t6fs/xB1+8A6vj9kC/oj+qCmMEagDaACSgHCIMBNY4hiqTldd6A1y5v8oS29ooo40vwNQfJsF0gL8pAFJE0gAZkLoSI52uMYXW4r+SOqECFrsiTgJSBKUIZhMQCRZVITB8werL6v66Aun/gZQqgoo5gyA34jD7Bo5WH3hdoxVYBrAEkVxobGrQraOdLi+vxVIX9j4E5DyQs3KecrI8MzqtQjSzMdYO/ArgDXKQhvBhua3e6tc5+auolIBJxyU7i53/KRV4DyA+2x4lZH6hg9Q4zmdnc9Qw9P0hlNnCWxWttkIPlTXA/+6E/nIpLUD1n/AFhteZWTjpqPY8ODRfHmTvpB+HGSrss1GcO26r7G57uN8pEF/SD8iZMCGVxmpqe1D/ZYP8+TlNH1hvQfgTmWbjWCVaxANzW/lkAQ/oz+cOizAHhteZeSuyhE0b+vMLUCJ0hdKxUDsU7bZCC4vu4TW7a/mkCLygnUZvk4gaMOrjBQVTWH7s8/nFgC30RdJ7YMgpmyzGQy0PQdNyyygTWQ20BvW9xA8bNOriAkCbbugaQtnmhuO6076I8ZOEelRNNmKrbz7ZzQ9Ec5mf4964vfQGzECFDliy6wAFZf8ha0tXSiv0BekSQwccsfr6XtzohWmeVzBVVBkafHV2QNo/QNfoqR0Mh/7edQTf2ZuJhwoyH6LsHPZZay//xgqV13EigodzD8CzNKkRA+5e9vpf/eXYpl0WvuzcjElysqNia2PR0dLnVeso73yP1xpIR6OuePJ2bHcGzHaKGKdFvnuE6YB+RFgP4UDGZgJjTwDwDG/CNldscp45czuR6zxDvtHG3eT7P5XCev6uwZgBYjfBHwx5j711exOzIVq30i1OBx4TQQ1AM4R0i/kDzec5ll975qp+VzIaNAo3958nobw5eFO10fZn/jAWON7AF+6+frMtemS5UuXTZWV3dt4Jcjg/HhW8J2RP6LvFeE7AC5BEBjuXN2Xb7t3yA6Hb/wPawp5zHpfM7VNXd6Tg9nZggv4wqlPrZspZuSpi8HqhddWlr1db66UGbPfygvQFvPEP1l0AevsMDPp2Fiw9rrKj3b/eNNGCvoAvh/1nOpYdAGVRbMz7eONT5rCXTFPPGfwKfgrsFPAYg6MNQWinvgX2fw/hGhJjgHnRM0AAAAASUVORK5CYII=">
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="css/bootstrap-material-design.min.css">
     <link type="text/css" rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Teamwork.com slack importer</title>
+    <title>Teamwork Chat Slack importer</title>
 </head>
 <body>
+    <div class="main-header container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <img src="//cdn0.teamwork.chat/0.19.1/images/logo-horizontal-beta.svg">
+                <h1>Slack importer</h1>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="main-content" data-bind="if: teamworkLoggedIn()">
-            <import-form params="{ users: users }"></import-form>
+            <import-form data-bind="{ teamworkLoggedIn: teamworkLoggedIn }"></import-form>
         </div>
 
         <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
@@ -24,8 +33,11 @@
     <% include teamwork_login_form %>
     <!-- Import form component template -->
     <% include import_form %>
-    <!-- User row component template -->
+    <!-- User editable component template -->
     <% include user_editable %>
+
+    <!-- Loading overlay component template -->
+    <% include loading_overlay %>
 
     <script src="ext_lib/jquery.min.js"></script>
     <script src="ext_lib/material.min.js"></script>
