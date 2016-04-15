@@ -1,9 +1,9 @@
 var timezonesIds = require('./teamwork_timezones_ids');
 var slackApi = require('./slack_api');
 var teamworkUserEditableFields = [
-    "first-name",
-    "last-name",
-    "email-address"
+    'email-address',
+    'first-name',
+    'last-name'
 ];
 
 
@@ -27,8 +27,6 @@ function asTeamworkUser(slackUser) {
         "last-name": slackUser.profile.last_name,
         "email-address": slackUser.profile.email,
         "avatar-url": slackUser.profile.image_512,
-        "user-type": 'account',
-        "user-name": slackUser.name,
         "timezoneId" : computeTimezoneFromSlackUser(slackUser)
     }
 };
@@ -38,6 +36,7 @@ function fetchTeamworkableUsers() {
     return slackApi.fetchUsers()
                    .then(asTeamworkUsers);
 }
+
 
 
 module.exports = {
