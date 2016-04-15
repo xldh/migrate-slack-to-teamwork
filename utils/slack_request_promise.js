@@ -13,6 +13,7 @@ function teamworkRequestPromise (params) {
             token: params.credentials
         },
         json: true,
+        simple: false,
         headers: {
             'User-Agent': 'Request-Promise'
         }

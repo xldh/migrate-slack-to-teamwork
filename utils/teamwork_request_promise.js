@@ -9,6 +9,7 @@ function teamworkRequestPromise (params) {
         method: params.httpMethod || 'GET',
         body: params.data,
         json: true,
+        simple: false,
         headers: {
             'User-Agent': 'Request-Promise',
             'Accept': 'application/json',
