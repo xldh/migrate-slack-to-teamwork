@@ -11,7 +11,9 @@
             </div>
 
             <div data-bind="foreach: users">
-                <user-editable params="{ user: $data, id: $index }"></user-editable>
+                <div class="row">
+                    <user-editable data-bind="slide: $data" params="{ user: $data, id: $index }"></user-editable>
+                </div>
             </div>
 
             <div class="form-group">

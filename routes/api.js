@@ -6,9 +6,10 @@ var slackRequestPromise = require('../utils/slack_request_promise');
 var teamworkRequestPromise = require('../utils/teamwork_request_promise');
 var Queue = require('bluebird-queue');
 
+router.use(ensureTeamworkAuthenticated);
 router.use(ensureSlackAuthenticated);
 
-router.get('/importable-slack-users', ensureTeamworkAuthenticated, function (req, res) {
+router.get('/importable-slack-users', function (req, res) {
     var user = req.user;
 
     slackRequestPromise({
@@ -53,10 +54,14 @@ router.post('/import',  function (req, res) {
     var credentials = req.user.teamworkApiKey;
     var queue = new Queue();
 
+    console.log(credentials);
+
     var users = prepareUsers(mainUserProfile, users);
     var importPromises = users.map(function (user) {
         return importUserPromise(user, credentials);
     });
+
+    console.log(importPromises);
 
     queue.add(importPromises);
     queue.start()

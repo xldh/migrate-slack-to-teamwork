@@ -21,13 +21,15 @@
     </div>
     <div class="container">
         <div class="main-content" data-bind="if: teamworkLoggedIn()">
-            <import-form data-bind="{ teamworkLoggedIn: teamworkLoggedIn }"></import-form>
+            <import-form params="apiState: apiState"></import-form>
         </div>
 
         <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
-            <teamwork-login-form params="{ teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
+            <teamwork-login-form params="{ apiState: apiState, teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
         </div>
     </div>
+
+    <loading-overlay params="apiState: apiState"></loading-overlay>
 
     <!-- Teamwork login form component template -->
     <% include teamwork_login_form %>
@@ -35,7 +37,6 @@
     <% include import_form %>
     <!-- User editable component template -->
     <% include user_editable %>
-
     <!-- Loading overlay component template -->
     <% include loading_overlay %>
 
