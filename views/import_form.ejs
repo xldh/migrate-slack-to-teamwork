@@ -6,7 +6,7 @@
         <form class="form-horizontal" data-bind="visible: users().length">
             <div class="form-group">
                 <div class="col-md-offset-10 col-md-2">
-                    <button type="submit" data-bind="click: importUsers" class="btn btn-block btn-raised btn-primary">Import</button>
+                    <button data-bind="attr: {disabled: !selectedUsers().length}, click: importUsers" class="btn btn-block btn-raised btn-primary">Import</button>
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-10 col-md-2">
-                    <button type="submit" data-bind="click: importUsers" class="btn btn-block btn-raised btn-primary">Import</button>
+                    <button data-bind="attr: {disabled: !selectedUsers().length}, click: importUsers" class="btn btn-block btn-raised btn-primary">Import</button>
                 </div>
             </div>
         </form>

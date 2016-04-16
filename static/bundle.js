@@ -16210,11 +16210,16 @@
 	
 	                twApi.login(component.siteUrl, component.apiKey)
 	                    .then(function (success) {
+	                        if (!success) {
+	                            apiState.loadingUsers(false);
+	                        }
+	
 	                        apiState.loggingIn(false);
 	                        component.teamworkLoggedIn(success);
 	                    })
 	                    .fail(function (err) {
 	                        apiState.loggingIn(false);
+	                        apiState.loadingUsers(false);
 	                    });
 	            };
 	
