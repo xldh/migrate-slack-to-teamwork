@@ -53,3 +53,6 @@ Breaking responsibilities into different parts
             isolate view "bindings" which will define data for the views
             a view model utility which collects different "bindings" to build the final view model
             components which display data and allow modifications
+
+
+Also I used unit tests (mocha with chai), but there were very few manipulations that could be easily isolated, so I just tested the part that needed to filter users already imported.

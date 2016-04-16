@@ -7,6 +7,7 @@ var teamworkRequestPromise = require('../utils/teamwork_request_promise');
 var Promise = require('bluebird');
 var Queue = require('bluebird-queue');
 var twConfig = require('../config').teamworkProjects;
+var computeImportableUsers = require('../utils/compute_importable_users');
 
 router.use(ensureTeamworkAuthenticated);
 router.use(ensureSlackAuthenticated);
@@ -92,19 +93,6 @@ router.post('/import',  function (req, res) {
             res.send(false);
         });
 });
-
-
-function computeImportableUsers(slackUsers, teamworkUsers) {
-    // use keys of a hash to simplify existing email addresses search
-    var teamworkUsersEmails = teamworkUsers.reduce(function (hashTable, teamworkUser) {
-        hashTable[teamworkUser['email-address']] = null;
-        return hashTable;
-    }, {});
-
-    return slackUsers.filter(function (slackUser) {
-        return !(slackUser.profile.email in teamworkUsersEmails);
-    });
-}
 
 
 function prepareUsers(mainUserProfile, users) {
