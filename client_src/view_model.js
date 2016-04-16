@@ -1,6 +1,8 @@
+var bindApiState = require('./bindings/api_state');
 var bindTeamworkState = require('./bindings/teamwork_state');
 
 var bindingFunctions = [
+    bindApiState,
     bindTeamworkState
 ];
 

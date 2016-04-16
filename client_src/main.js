@@ -1,13 +1,13 @@
 var api = require('./apis/slack_teamwork_bridge');
 var ko = require('knockout');
-var registerComponents = require('./register_components');
+var registerEverything = require('./register_everything');
 var ViewModel = require('./view_model');
 
 init();
 
 
 function init() {
-    registerComponents();
+    registerEverything();
     initViewModel();
     initMaterial();
 }

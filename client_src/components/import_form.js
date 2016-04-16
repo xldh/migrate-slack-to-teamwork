@@ -9,15 +9,18 @@ function importFormComponent() {
         viewModel: function (params) {
             var component = this;
 
+            component.apiState = params.apiState;
             component.users = ko.observableArray();
             component.selectedUsers = ko.observableArray();
 
             console.log('teamworkLoggedIn', true);
-            fetchUsers().then(function (users) {
-                component.users(users.map(makeObservable));
-                component.selectAll();
-                console.log('users', component.selectedUsers());
-            });
+
+            fetchUsers()
+                .then(function (users) {
+                    component.users(users.map(makeObservable));
+                    component.selectAll();
+                    component.apiState.loadingUsers(false);
+                });
 
 
             component.toggleSelection = function (user) {
@@ -69,8 +72,13 @@ function importFormComponent() {
             component.importUsers = function () {
                 var users = component.selectedUsers().map(dataFromObservable);
 
+                component.apiState.importingUsers(true);
+
                 importUsers(users).then(function (data) {
                     console.log('importUsers', data);
+                    component.apiState.importingUsers(false);
+                }).fail(function () {
+                    component.apiState.importingUsers(false);
                 });
             };
         },

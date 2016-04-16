@@ -6,15 +6,21 @@ function teamworkLoginFormComponent() {
     ko.components.register('teamwork-login-form', {
         viewModel: function (params) {
             var component = this;
+            var apiState = params.apiState;
 
             component.apiKey = '';
             component.teamworkLoggedIn = params.teamworkLoggedIn;
 
             component.login = function () {
+                apiState.loggingIn(true);
+                apiState.loadingUsers(true);
+
                 twApi.login(component.apiKey)
                     .then(function (success) {
-                        console.log(success);
+                        apiState.loggingIn(false);
                         component.teamworkLoggedIn(success);
+                    }).fail(function (err) {
+                        apiState.loggingIn(false);
                     });
             };
 
