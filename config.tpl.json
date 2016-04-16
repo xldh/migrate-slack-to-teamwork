@@ -1,0 +1,16 @@
+{
+    "slack": {
+        "clientId": "xxxxxxxx",
+        "clientSecret": "xxxxxxxx",
+        "apiUrl": "https://slack.com/api/",
+        "authorizationUri": "https://slack.com/oauth/authorize",
+        "accessTokenUri": "https://slack.com/api/oauth.access",
+        "callbackUrl": "http://localhost:8080/auth/slack/callback"
+    },
+    "teamworkProjects": {
+        "authenticationUrl": "authenticate.teamworkpm.net/authenticate.json"
+    },
+    "session": {
+        "secret": "put a random value here, it does not really matter"
+    }
+}
