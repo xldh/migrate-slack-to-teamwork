@@ -1,3 +1,18 @@
+Scenario:
+
+I decided to ask for the Slack authentication and then Teamwork api's.
+Slack credentials are remembered and Teamwork's are asked every time you access the url.
+Once you are correctly logged in, the server gets all slack users that you did not already import (uniqueness by email address).
+If no users are provided (you either have no contacts on slack, or you already imported all of them), you are offered to be redirected to Teamwork Chat.
+Once you selected the users you want to import (all are selected by default), you can click on one of the import buttons.
+Once imported you are offered to be redirected to Teamwork Chat.
+
+It lacks of error feedback, it is silent event though users not being imported will be still available for edition, and could be an improvement to be done.
+
+I chose material design principles for the UI.
+
+Technical choices:
+
 Using client-oauth2 for oAuth2 client authentication, I picked it amongst several ones candidates were:
 node-oauth -> Seemed mature, had a lot of contributions, last active was nov 2015, on the other hand it seemed not so robust concerning oAuth2
 simple-oauth2 -> Seemed okay but I was not sure I could rely on it, or if it was robust enough
