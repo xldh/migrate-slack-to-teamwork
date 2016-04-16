@@ -4,10 +4,10 @@
 
 ### At the root of the project
 
-    ```npm install```
+    npm install
 
 Use:
 
-    ```node server.js```
+    node server.js
 
-    Browse localhost:8080
+Browse localhost:8080
