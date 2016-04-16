@@ -3,9 +3,16 @@ var rp = require('request-promise');
 
 function teamworkRequestPromise (params) {
     params = params || {};
+    params.userSite = params.userSite || '';
+
+    var userSite = params.userSite + '/';
+
+    if (userSite.indexOf('https://') !== 0) {
+        userSite = 'https://' + userSite;
+    }
 
     return rp({
-        uri: twConfig.userSite + params.apiMethod + '.json',
+        uri: userSite + params.apiMethod + '.json',
         method: params.httpMethod || 'GET',
         body: params.data,
         json: true,

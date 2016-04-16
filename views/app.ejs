@@ -20,12 +20,21 @@
         </div>
     </div>
     <div class="container">
-        <div class="main-content" data-bind="if: teamworkLoggedIn()">
-            <import-form params="apiState: apiState"></import-form>
-        </div>
-
+        <!-- 1st step: Login to teamwork -->
         <div class="main-content" data-bind="ifnot: teamworkLoggedIn()">
-            <teamwork-login-form params="{ apiState: apiState, teamworkLoggedIn: teamworkLoggedIn }"></teamwork-login-form>
+            <teamwork-login-form params="{
+                apiState: apiState,
+                teamworkLoggedIn: teamworkLoggedIn,
+                siteUrl: siteUrl
+            }"></teamwork-login-form>
+        </div>
+        <!-- 2nd step: Import -->
+        <div class="main-content" data-bind="if: teamworkLoggedIn() && !importDone()">
+            <import-form params="{ apiState: apiState, importDone: importDone }"></import-form>
+        </div>
+        <!-- 3rd step: Button to redirect to Teamwork Chat -->
+        <div class="main-content" data-bind="if: importDone()">
+            <import-done></import-done>
         </div>
     </div>
 
@@ -39,6 +48,8 @@
     <% include user_editable %>
     <!-- Loading overlay component template -->
     <% include loading_overlay %>
+    <!-- Import done component template -->
+    <% include import_done %>
 
     <script src="ext_lib/jquery.min.js"></script>
     <script src="ext_lib/material.min.js"></script>

@@ -8,8 +8,7 @@ function registerFadeHandler() {
         },
         update: function (element, valueAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor());
-            console.log('fade', value);
-            value ? $(element).fadeTo(250, 1) : $(element).fadeOut();
+            value ? $(element).fadeIn(280) : $(element).fadeOut();
         }
     };
 }

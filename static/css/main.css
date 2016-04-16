@@ -1,8 +1,59 @@
+.main-header {
+  background-color: #2d333d;
+  color: white;
+  padding: 15px;
+}
+.main-header :hover {
+  cursor: default;
+}
+.main-content {
+  margin-top: 150px;
+}
 .main-content .teamwork-login-form {
   width: 75%;
   margin: 0 auto;
-  margin-top: 55px;
+}
+.main-content .teamwork-login-form legend {
+  cursor: default;
 }
 .main-content .import-form .no-users {
   margin-top: 55px;
+}
+.main-content .import-form .panel-heading {
+  background: #2d333d;
+}
+.main-content .import-form .panel-heading legend {
+  color: white;
+}
+.main-content .import-form .checkbox .checkbox-material {
+  margin-right: 10px;
+}
+.main-content .import-done {
+  text-align: center;
+}
+.main-content .checkmark {
+  display: inline-block;
+}
+.main-content .checkmark:after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 60px;
+  border: solid #aea;
+  border-width: 0 15px 15px 0;
+  transform: rotate(45deg);
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: #2d333d;
+  z-index: 1000;
+}
+.overlay .chat-app-logo {
+  position: absolute;
+  left: 42%;
+  top: 35%;
 }

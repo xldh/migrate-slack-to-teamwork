@@ -9,11 +9,10 @@ function importFormComponent() {
         viewModel: function (params) {
             var component = this;
 
+            component.importDone = params.importDone;
             component.apiState = params.apiState;
             component.users = ko.observableArray();
             component.selectedUsers = ko.observableArray();
-
-            console.log('teamworkLoggedIn', true);
 
             fetchUsers()
                 .then(function (users) {
@@ -24,14 +23,11 @@ function importFormComponent() {
 
 
             component.toggleSelection = function (user) {
-                console.log('toggleSelection', user);
 
                 if (component.isSelected(user)) {
                     component.deselect(user);
-                    console.log('user will NOT be imported', user['email-address']());
                 } else {
                     component.select(user);
-                    console.log('user will be imported', user['email-address']());
                 }
             };
 
@@ -49,8 +45,6 @@ function importFormComponent() {
                 if (indexOfUser !== - 1) {
                     component.selectedUsers.splice(indexOfUser, 1);
                 }
-
-                console.log(component.selectedUsers());
             }
 
 
@@ -75,8 +69,8 @@ function importFormComponent() {
                 component.apiState.importingUsers(true);
 
                 importUsers(users).then(function (data) {
-                    console.log('importUsers', data);
                     component.apiState.importingUsers(false);
+                    component.importDone(true);
                 }).fail(function () {
                     component.apiState.importingUsers(false);
                 });

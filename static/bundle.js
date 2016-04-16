@@ -46,14 +46,18 @@
 
 	__webpack_require__(1);
 	__webpack_require__(9);
-	__webpack_require__(15);
+	__webpack_require__(19);
 	__webpack_require__(4);
 	__webpack_require__(2);
 	__webpack_require__(13);
 	__webpack_require__(3);
+	__webpack_require__(20);
+	__webpack_require__(21);
+	__webpack_require__(18);
 	__webpack_require__(17);
-	__webpack_require__(16);
+	__webpack_require__(15);
 	__webpack_require__(14);
+	__webpack_require__(16);
 	__webpack_require__(12);
 	__webpack_require__(10);
 	module.exports = __webpack_require__(11);
@@ -65,21 +69,16 @@
 
 	var api = __webpack_require__(2);
 	var ko = __webpack_require__(6);
-	var registerComponents = __webpack_require__(9);
-	var ViewModel = __webpack_require__(15);
+	var registerEverything = __webpack_require__(9);
+	var ViewModel = __webpack_require__(19);
 	
 	init();
 	
 	
 	function init() {
-	
-	    api.fetchTeamworkableUsers()
-	        .then(function (users) {
-	            registerComponents();
-	            return users;
-	        })
-	        .then(initViewModel)
-	        .then(initMaterial);
+	    registerEverything();
+	    initViewModel();
+	    initMaterial();
 	}
 	
 	
@@ -87,12 +86,12 @@
 	    $.material.init();
 	}
 	
-	function initViewModel(users) {
-	    var viewModel = new ViewModel({
-	        users: users
-	    });
+	function initViewModel() {
+	    var viewModel = new ViewModel();
 	
 	    ko.applyBindings(viewModel);
+	
+	    return viewModel;
 	}
 
 
@@ -103,9 +102,10 @@
 	var timezonesIds = __webpack_require__(3);
 	var slackApi = __webpack_require__(4);
 	var teamworkUserEditableFields = [
-	    "first-name",
-	    "last-name",
-	    "email-address"
+	    'email-address',
+	    'user-name',
+	    'first-name',
+	    'last-name'
 	];
 	
 	
@@ -127,10 +127,9 @@
 	    return {
 	        "first-name": slackUser.profile.first_name,
 	        "last-name": slackUser.profile.last_name,
+	        "user-name": slackUser.name,
 	        "email-address": slackUser.profile.email,
 	        "avatar-url": slackUser.profile.image_512,
-	        "user-type": 'account',
-	        "user-name": slackUser.name,
 	        "timezoneId" : computeTimezoneFromSlackUser(slackUser)
 	    }
 	};
@@ -140,6 +139,7 @@
 	    return slackApi.fetchUsers()
 	                   .then(asTeamworkUsers);
 	}
+	
 	
 	
 	module.exports = {
@@ -316,7 +316,7 @@
 	function fetchUsers() {
 	    return $.ajax({
 	        method: 'get',
-	        url: '/api/slack/users',
+	        url: '/api/importable-slack-users',
 	        dataType: 'json'
 	    });
 	}
@@ -16082,21 +16082,31 @@
 	var userEditableComponent = __webpack_require__(10);
 	var teamworkLoginFormComponent = __webpack_require__(12);
 	var importFormComponent = __webpack_require__(14);
+	var importDoneComponent = __webpack_require__(15);
+	var loadingOverlayComponent = __webpack_require__(16);
 	
-	var components = [
+	var slideBindingHandler = __webpack_require__(17);
+	var fadeBindingHandler = __webpack_require__(18);
+	
+	
+	var functionsToRegister = [
 	    importFormComponent,
+	    importDoneComponent,
 	    userEditableComponent,
-	    teamworkLoginFormComponent
+	    teamworkLoginFormComponent,
+	    loadingOverlayComponent,
+	    slideBindingHandler,
+	    fadeBindingHandler
 	];
 	
 	
-	function registerComponents() {
-	    components.forEach(function (component) {
-	        component();
+	function registerEverything() {
+	    functionsToRegister.forEach(function (functionToRegister) {
+	        functionToRegister();
 	    });
 	}
 	
-	module.exports = registerComponents;
+	module.exports = registerEverything;
 
 
 /***/ },
@@ -16169,7 +16179,6 @@
 	        data[key] = object[key]();
 	    }
 	
-	    console.log(data);
 	    return data;
 	}
 	
@@ -16183,22 +16192,32 @@
 
 	var ko = __webpack_require__(6);
 	var twApi = __webpack_require__(13);
+	var fetchUsers = __webpack_require__(2).fetchTeamworkableUsers;
 	
 	function teamworkLoginFormComponent() {
 	    ko.components.register('teamwork-login-form', {
 	        viewModel: function (params) {
 	            var component = this;
+	            var apiState = params.apiState;
 	
 	            component.apiKey = '';
+	            component.siteUrl = params.siteUrl;
 	            component.teamworkLoggedIn = params.teamworkLoggedIn;
 	
 	            component.login = function () {
-	                twApi.login(component.apiKey)
+	                apiState.loggingIn(true);
+	                apiState.loadingUsers(true);
+	
+	                twApi.login(component.siteUrl, component.apiKey)
 	                    .then(function (success) {
-	                        console.log(success);
+	                        apiState.loggingIn(false);
 	                        component.teamworkLoggedIn(success);
+	                    })
+	                    .fail(function (err) {
+	                        apiState.loggingIn(false);
 	                    });
 	            };
+	
 	        },
 	        template: { element: 'teamwork-login-form-template' }
 	    });
@@ -16213,20 +16232,28 @@
 
 	var $ = __webpack_require__(5);
 	
-	function login (apiKey) {
+	function login (userSite, apiKey) {
 	    return $.post('/auth/teamwork', {
+	        userSite: userSite,
 	        apiKey: apiKey
 	    });
 	}
 	
 	function importUsers(users) {
-	    return $.post('/api/teamwork/import', {
+	    return $.post('/api/import', {
 	        users: users
 	    });
 	}
 	
+	
+	function fetchSiteUrl() {
+	    return $.get('/api/teamwork-site-url');
+	}
+	
+	
 	module.exports = {
 	    login: login,
+	    fetchSiteUrl: fetchSiteUrl,
 	    importUsers: importUsers
 	};
 
@@ -16239,21 +16266,32 @@
 	var makeObservable = __webpack_require__(11).makeObservable;
 	var dataFromObservable = __webpack_require__(11).dataFromObservable;
 	var importUsers = __webpack_require__(13).importUsers;
+	var fetchUsers = __webpack_require__(2).fetchTeamworkableUsers;
 	
 	function importFormComponent() {
 	    ko.components.register('import-form', {
 	        viewModel: function (params) {
 	            var component = this;
 	
+	            component.importDone = params.importDone;
+	            component.apiState = params.apiState;
+	            component.users = ko.observableArray();
+	            component.selectedUsers = ko.observableArray();
+	
+	            fetchUsers()
+	                .then(function (users) {
+	                    component.users(users.map(makeObservable));
+	                    component.selectAll();
+	                    component.apiState.loadingUsers(false);
+	                });
+	
+	
 	            component.toggleSelection = function (user) {
-	                console.log('toggleSelection', user);
 	
 	                if (component.isSelected(user)) {
 	                    component.deselect(user);
-	                    console.log('user will NOT be imported', user['email-address']());
 	                } else {
 	                    component.select(user);
-	                    console.log('user will be imported', user['email-address']());
 	                }
 	            };
 	
@@ -16271,8 +16309,6 @@
 	                if (indexOfUser !== - 1) {
 	                    component.selectedUsers.splice(indexOfUser, 1);
 	                }
-	
-	                console.log(component.selectedUsers());
 	            }
 	
 	
@@ -16294,15 +16330,15 @@
 	            component.importUsers = function () {
 	                var users = component.selectedUsers().map(dataFromObservable);
 	
+	                component.apiState.importingUsers(true);
+	
 	                importUsers(users).then(function (data) {
-	                    console.log('importUsers', data);
+	                    component.apiState.importingUsers(false);
+	                    component.importDone(true);
+	                }).fail(function () {
+	                    component.apiState.importingUsers(false);
 	                });
 	            };
-	
-	            component.users = ko.observableArray(params.users().map(makeObservable));
-	            component.selectedUsers = ko.observableArray();
-	
-	            component.selectAll();
 	        },
 	        template: { element: 'import-form-template' }
 	    });
@@ -16316,11 +16352,111 @@
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindUsers = __webpack_require__(16);
-	var bindTeamworkState = __webpack_require__(17);
+	var ko = __webpack_require__(6);
+	
+	function importDoneComponent() {
+	    ko.components.register('import-done', {
+	        template: { element: 'import-done-template' }
+	    });
+	}
+	
+	
+	module.exports = importDoneComponent;
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ko = __webpack_require__(6);
+	var $ = __webpack_require__(5);
+	
+	
+	function loadingOverlayComponent() {
+	    ko.components.register('loading-overlay', {
+	        viewModel: function (params) {
+	            var component = this;
+	            var apiState = params.apiState;
+	
+	            var states = [
+	                apiState.loggingIn,
+	                apiState.importingUsers,
+	                apiState.loadingUsers
+	            ];
+	
+	
+	
+	            component.loading = ko.pureComputed(function () {
+	                return states.some(isTrue);
+	            });
+	
+	            function isTrue (observable) {
+	                return !!observable();
+	            }
+	        },
+	        template: { element: 'loading-overlay-template' }
+	    });
+	}
+	
+	module.exports = loadingOverlayComponent;
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ko = __webpack_require__(6);
+	
+	function registerSlideHandler() {
+	    ko.bindingHandlers.slide = {
+	        init: function (element, valueAccessor) {
+	            var value = ko.utils.unwrapObservable(valueAccessor());
+	            var $element = $(element);
+	            $element.css('display', 'block');
+	            $element.hide(value);
+	        },
+	        update: function (element, valueAccessor) {
+	            var value = ko.utils.unwrapObservable(valueAccessor());
+	            var $element = $(element);
+	            value ? $element.slideDown(600) : $element.slideUp();
+	        }
+	    };
+	}
+	
+	module.exports = registerSlideHandler;
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ko = __webpack_require__(6);
+	
+	function registerFadeHandler() {
+	    ko.bindingHandlers.fade = {
+	        init: function (element, valueAccessor) {
+	            var value = ko.utils.unwrapObservable(valueAccessor());
+	            $(element).hide(value);
+	        },
+	        update: function (element, valueAccessor) {
+	            var value = ko.utils.unwrapObservable(valueAccessor());
+	            value ? $(element).fadeIn(280) : $(element).fadeOut();
+	        }
+	    };
+	}
+	
+	module.exports = registerFadeHandler;
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var bindApiState = __webpack_require__(20);
+	var bindTeamworkState = __webpack_require__(21);
 	
 	var bindingFunctions = [
-	    bindUsers,
+	    bindApiState,
 	    bindTeamworkState
 	];
 	
@@ -16334,28 +16470,32 @@
 
 
 /***/ },
-/* 16 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(6);
 	
-	function UserListBinding(model) {
-	    var users = model.users;
-	    var binding = this;
-	    binding.users = ko.observableArray(users);
+	function ApiState() {
+	    this.apiState = {
+	        loggingIn: ko.observable(false),
+	        loadingUsers: ko.observable(false),
+	        importingUsers: ko.observable(false)
+	    };
 	}
 	
-	module.exports = UserListBinding;
+	module.exports = ApiState;
 
 
 /***/ },
-/* 17 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ko = __webpack_require__(6);
 	
 	function TeamworkState() {
-	    this.teamworkLoggedIn = ko.observable(false)
+	    this.teamworkLoggedIn = ko.observable(false);
+	    this.siteUrl = ko.observable(null);
+	    this.importDone = ko.observable(false);
 	}
 	
 	module.exports = TeamworkState;

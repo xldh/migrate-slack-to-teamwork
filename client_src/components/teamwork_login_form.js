@@ -9,17 +9,19 @@ function teamworkLoginFormComponent() {
             var apiState = params.apiState;
 
             component.apiKey = '';
+            component.siteUrl = params.siteUrl;
             component.teamworkLoggedIn = params.teamworkLoggedIn;
 
             component.login = function () {
                 apiState.loggingIn(true);
                 apiState.loadingUsers(true);
 
-                twApi.login(component.apiKey)
+                twApi.login(component.siteUrl, component.apiKey)
                     .then(function (success) {
                         apiState.loggingIn(false);
                         component.teamworkLoggedIn(success);
-                    }).fail(function (err) {
+                    })
+                    .fail(function (err) {
                         apiState.loggingIn(false);
                     });
             };

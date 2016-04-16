@@ -3,8 +3,6 @@ function ensureTeamworkAuthenticated (req, res, next) {
         return next();
     }
 
-    console.log('Ensure teamwork authenticated failed');
-
     res.sendStatus(401);
 }
 

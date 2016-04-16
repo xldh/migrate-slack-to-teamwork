@@ -5,6 +5,7 @@ var ensureTeamworkAuthenticated = require('../middlewares/ensure_teamwork_authen
 var slackRequestPromise = require('../utils/slack_request_promise');
 var teamworkRequestPromise = require('../utils/teamwork_request_promise');
 var Queue = require('bluebird-queue');
+var twConfig = require('../config').teamworkProjects;
 
 router.use(ensureTeamworkAuthenticated);
 router.use(ensureSlackAuthenticated);
@@ -51,17 +52,14 @@ router.get('/importable-slack-users', function (req, res) {
 router.post('/import',  function (req, res) {
     var mainUserProfile = req.user.teamworkProfile;
     var users = req.body.users || [];
+    var userSite = req.user.teamworkUserSite;
     var credentials = req.user.teamworkApiKey;
     var queue = new Queue();
 
-    console.log(credentials);
-
     var users = prepareUsers(mainUserProfile, users);
     var importPromises = users.map(function (user) {
-        return importUserPromise(user, credentials);
+        return importUserPromise(user, userSite, credentials);
     });
-
-    console.log(importPromises);
 
     queue.add(importPromises);
     queue.start()
@@ -103,10 +101,11 @@ function copySharedFields(me, user) {
 }
 
 
-function importUserPromise (user, credentials) {
+function importUserPromise (user, userSite, credentials) {
     return teamworkRequestPromise({
         apiMethod: 'people',
         httpMethod: 'POST',
+        userSite: userSite,
         credentials: credentials,
         data: { person: user }
     });

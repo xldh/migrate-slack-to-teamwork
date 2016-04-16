@@ -36,7 +36,6 @@ function dataFromObservable(object) {
         data[key] = object[key]();
     }
 
-    console.log(data);
     return data;
 }
 

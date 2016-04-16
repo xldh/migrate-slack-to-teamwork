@@ -1,10 +1,5 @@
 @dark-blue: #2d333d;
 
-.body,html {
-    width: 100%;
-    height: 100%;
-}
-
 .main-header {
     background-color: @dark-blue;
     color: white;
@@ -16,10 +11,11 @@
 }
 
 .main-content {
+    margin-top: 150px;
+
     .teamwork-login-form {
         width: 75%;
         margin: 0 auto;
-        margin-top: 150px;
 
         legend {
             cursor: default;
@@ -43,6 +39,25 @@
             margin-right: 10px;
         }
     }
+
+
+    .import-done {
+        text-align: center;
+    }
+
+    .checkmark {
+        display:inline-block;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 60px;
+            border: solid #aea;
+            border-width: 0 15px 15px 0;
+            transform: rotate(45deg);
+        }
+    }
 }
 
 .overlay {
@@ -51,12 +66,12 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    background: black;
+    background: @dark-blue;
     z-index: 1000;
 
     .chat-app-logo {
         position: absolute;
-        top: 40%;
-        left: 40%;
+        left: 42%;
+        top: 35%;
     }
 }
