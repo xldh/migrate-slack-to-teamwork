@@ -51,10 +51,10 @@
 	__webpack_require__(2);
 	__webpack_require__(13);
 	__webpack_require__(3);
-	__webpack_require__(20);
-	__webpack_require__(21);
 	__webpack_require__(18);
 	__webpack_require__(17);
+	__webpack_require__(20);
+	__webpack_require__(21);
 	__webpack_require__(15);
 	__webpack_require__(14);
 	__webpack_require__(16);
@@ -16280,9 +16280,13 @@
 	
 	            fetchUsers()
 	                .then(function (users) {
+	                    component.apiState.loadingUsers(false);
+	                    if (users.length === 0) {
+	                        component.importDone(true);
+	                    }
+	
 	                    component.users(users.map(makeObservable));
 	                    component.selectAll();
-	                    component.apiState.loadingUsers(false);
 	                });
 	
 	

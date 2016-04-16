@@ -4,6 +4,7 @@ var ensureSlackAuthenticated = require('../middlewares/ensure_slack_authenticate
 var ensureTeamworkAuthenticated = require('../middlewares/ensure_teamwork_authenticated');
 var slackRequestPromise = require('../utils/slack_request_promise');
 var teamworkRequestPromise = require('../utils/teamwork_request_promise');
+var Promise = require('bluebird');
 var Queue = require('bluebird-queue');
 var twConfig = require('../config').teamworkProjects;
 
@@ -12,22 +13,44 @@ router.use(ensureSlackAuthenticated);
 
 router.get('/importable-slack-users', function (req, res) {
     var user = req.user;
+    var teamworkApiKey = user.teamworkApiKey;
+    var userSite = user.teamworkUserSite;
+    var slackUsers;
 
     slackRequestPromise({
         apiMethod: 'users.list',
         credentials: user.accessToken
     }).then(function (data) {
-        if (data.ok) {
-            var myUser = data.members.filter(me)[0];
-            var users = data.members.filter(notMe)
-                                    .filter(notBot)
-                                    .filter(hasEmail);
-
-            user.teamworkProfile = myUser;
-            res.send(users);
-        } else {
-            res.status(500).send({ error: 'Sorry something went wrong!' });
+        if (!data.ok) {
+            return Promise.reject();
         }
+
+        var mySlackUser = data.members.filter(me)[0];
+        slackUsers = data.members.filter(notMe)
+                                .filter(notBot)
+                                .filter(hasEmail);
+
+        user.slackProfile = mySlackUser;
+
+        return teamworkRequestPromise({
+            apiMethod: 'people',
+            '?': {
+                pageSize: 1000
+            },
+            userSite: userSite,
+            credentials: teamworkApiKey
+        });
+    }).then(function (data) {
+        if (data.STATUS !== 'OK') {
+            return Promise.reject();
+        }
+
+        var teamworkUsers = data.people;
+        var users = computeImportableUsers(slackUsers, teamworkUsers);
+
+        res.send(users);
+    }).catch(function () {
+        res.status(500).send({ error: 'Sorry something went wrong!' });
     });
 
     function me (member) {
@@ -50,7 +73,7 @@ router.get('/importable-slack-users', function (req, res) {
 
 
 router.post('/import',  function (req, res) {
-    var mainUserProfile = req.user.teamworkProfile;
+    var mainUserProfile = req.user.slackProfile;
     var users = req.body.users || [];
     var userSite = req.user.teamworkUserSite;
     var credentials = req.user.teamworkApiKey;
@@ -69,6 +92,19 @@ router.post('/import',  function (req, res) {
             res.send(false);
         });
 });
+
+
+function computeImportableUsers(slackUsers, teamworkUsers) {
+    // use keys of a hash to simplify existing email addresses search
+    var teamworkUsersEmails = teamworkUsers.reduce(function (hashTable, teamworkUser) {
+        hashTable[teamworkUser['email-address']] = null;
+        return hashTable;
+    }, {});
+
+    return slackUsers.filter(function (slackUser) {
+        return !(slackUser.profile.email in teamworkUsersEmails);
+    });
+}
 
 
 function prepareUsers(mainUserProfile, users) {

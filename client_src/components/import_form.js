@@ -16,9 +16,13 @@ function importFormComponent() {
 
             fetchUsers()
                 .then(function (users) {
+                    component.apiState.loadingUsers(false);
+                    if (users.length === 0) {
+                        component.importDone(true);
+                    }
+
                     component.users(users.map(makeObservable));
                     component.selectAll();
-                    component.apiState.loadingUsers(false);
                 });
 
 

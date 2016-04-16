@@ -7,7 +7,8 @@ function teamworkRequestPromise (params) {
 
     var userSite = params.userSite + '/';
 
-    if (userSite.indexOf('https://') !== 0) {
+    if (userSite.indexOf('http://') !== 0 &&
+        userSite.indexOf('https://') !== 0) {
         userSite = 'https://' + userSite;
     }
 
@@ -15,6 +16,7 @@ function teamworkRequestPromise (params) {
         uri: userSite + params.apiMethod + '.json',
         method: params.httpMethod || 'GET',
         body: params.data,
+        qs: params['?'],
         json: true,
         simple: false,
         headers: {
